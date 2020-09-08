@@ -1,0 +1,69 @@
+@model MvcDriverVerify.Models.User
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>User</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.UNames)
+        </dt>
+        <dd class = "col-sm-5">
+            @Html.DisplayFor(model => model.UNames)
+        </dd>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.UGender)
+        </dt>
+        <dd class = "col-sm-5">
+            @Html.DisplayFor(model => model.UGender)
+        </dd>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.UAge)
+        </dt>
+        <dd class = "col-sm-5">
+            @Html.DisplayFor(model => model.UAge)
+        </dd>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.URating)
+        </dt>
+        <dd class = "col-sm-5">
+            @Html.DisplayFor(model => model.URating)
+        </dd>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.UPartner)
+        </dt>
+        <dd class = "col-sm-5">
+            @Html.DisplayFor(model => model.UPartner.UNames)
+        </dd class>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.UPlatform)
+        </dt>
+        <dd class = "col-sm-5">
+            @Html.DisplayFor(model => model.UPlatform.PName)
+        </dd class>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.UUsertype)
+        </dt>
+        <dd class = "col-sm-5">
+            @Html.DisplayFor(model => model.UUsertype.UTDescription)
+        </dd class>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.UV)
+        </dt>
+        <dd class = "col-sm-5">
+            @Html.DisplayFor(model => model.UV.Vregistration)
+        </dd class>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="UId" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

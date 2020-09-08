@@ -1,0 +1,66 @@
+@model MvcDriverVerify.Models.User
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Driver/Owner Details</h1>
+
+<div>
+    <h4>Latest Details:</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.UNames)
+        </dt>
+        <dd class = "col-sm-5">
+            @Html.DisplayFor(model => model.UNames)
+        </dd>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.UGender)
+        </dt>
+        <dd class = "col-sm-5">
+            @Html.DisplayFor(model => model.UGender)
+        </dd>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.UAge)
+        </dt>
+        <dd class = "col-sm-5">
+            @Html.DisplayFor(model => model.UAge)
+        </dd>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.URating)
+        </dt>
+        <dd class = "col-sm-5">
+            @Html.DisplayFor(model => model.URating)
+        </dd>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.UPartner)
+        </dt>
+        <dd class = "col-sm-5">
+            @Html.DisplayFor(model => model.UPartner.UNames)
+        </dd>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.UPlatform)
+        </dt>
+        <dd class = "col-sm-5">
+            @Html.DisplayFor(model => model.UPlatform.PName)
+        </dd>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.UUsertype)
+        </dt>
+        <dd class = "col-sm-5">
+            @Html.DisplayFor(model => model.UUsertype.UTDescription)
+        </dd>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.UV)
+        </dt>
+        <dd class = "col-sm-5">
+            @Html.DisplayFor(model => model.UV.Vregistration)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.UId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,51 @@
+@model IEnumerable<MvcDriverVerify.Models.Comments>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Comments Section</h1>
+<div class="form group form-group-input">
+
+    <div class="form-group">
+
+            <span><a asp-action="Create">Add Comment</a></span>
+
+        <form>
+            <p>
+                <input type="text" value="Enter search text here"/>
+                <input type="submit" value="Go" class="btn btn-primary"/>
+            </p>
+        </form>
+    </div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CText)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CDateTime)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td class="list-unstyled">
+                @Html.DisplayFor(modelItem => item.CText)
+            </td>
+            <td class="list-unstyled">
+                @Html.DisplayFor(modelItem => item.CDateTime)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.CId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.CId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.CId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

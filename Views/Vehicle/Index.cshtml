@@ -1,0 +1,65 @@
+@model IEnumerable<MvcDriverVerify.Models.Vehicle>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Vregistration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VMake)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VModelName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VModelYear)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VParter)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VPlatform)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vregistration)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VMake)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VModelName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VModelYear)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VParter.UNames)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VPlatform.PName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.VId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.VId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.VId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

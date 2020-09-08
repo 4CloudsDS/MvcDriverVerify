@@ -1,0 +1,42 @@
+@model MvcDriverVerify.Models.Comments
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Comments</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.CText)
+        </dt>
+        <dd class = "col-sm-5">
+            @Html.DisplayFor(model => model.CText)
+        </dd>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.CDateTime)
+        </dt>
+        <dd class = "col-sm-5">
+            @Html.DisplayFor(model => model.CDateTime)
+        </dd>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.CP)
+        </dt>
+        <dd class = "col-sm-5">
+            @Html.DisplayFor(model => model.CP.UNames)
+        </dd>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.CU)
+        </dt>
+        <dd class = "col-sm-5">
+            @Html.DisplayFor(model => model.CU.UNames)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.CId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

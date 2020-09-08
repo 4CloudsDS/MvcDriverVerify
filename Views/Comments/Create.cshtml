@@ -1,0 +1,51 @@
+@model MvcDriverVerify.Models.Comments
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Add</h1>
+
+<h4>Comments</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group  form-group-input">
+                <label asp-for="CId" class="control-label"></label>
+                <input asp-for="CId" class="form-control" />
+                <span asp-validation-for="CId" class="text-danger"></span>
+            </div>
+            <div class="form-group  form-group-input">
+                <label asp-for="CText" class="control-label"></label>
+                <textarea asp-for="CText" rows="10" class="form-control"></textarea>
+                <span asp-validation-for="CText" class="text-danger"></span>
+            </div>
+            <div class="form-group  form-group-input">
+                <label asp-for="CDateTime" class="control-label"></label>
+                <input asp-for="CDateTime" class="form-control" />
+                <span asp-validation-for="CDateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group  form-group-input">
+                <label asp-for="CUid" class="control-label"></label>
+                <select asp-for="CUid" class ="form-control" asp-items="ViewBag.CUid"></select>
+            </div>
+            <div class="form-group  form-group-input">
+                <label asp-for="CPid" class="control-label"></label>
+                <select asp-for="CPid" class ="form-control" asp-items="ViewBag.CPid"></select>
+            </div>
+            <div class="form-group  form-group-input">
+                <input type="submit" value="Comment" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

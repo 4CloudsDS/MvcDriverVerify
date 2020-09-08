@@ -1,0 +1,64 @@
+@model MvcDriverVerify.Models.DriverVehicleModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Driver/ Owner Search</h1>
+<div class="form group form-group-input">
+
+    <div class="form-group">
+
+            <span>Add New  <p><a>Driver/Owner </a></p></span>
+
+        <form>
+            <p>
+                <input type="text" value="Search Name" asp-for="S"/>
+                <input type="submit" value="Go" class="btn btn-primary"/>
+            </p>
+        </form>
+
+
+    </div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Users[0].UNames)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Users[0].UGender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Users[0].URating)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Users[0].UV)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Users) {
+        <tr>
+            <td class="list-unstyled">
+                @Html.DisplayFor(modelItem => item.UNames)
+            </td>
+            <td class="list-unstyled">
+                @Html.DisplayFor(modelItem => item.UGender)
+            </td>
+            <td class="list-unstyled">
+                @Html.DisplayFor(modelItem => item.URating)
+            </td>
+            <td class="list-unstyled">
+                @Html.DisplayFor(modelItem => item.UV.Vregistration)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.UId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.UId">Details</a> 
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

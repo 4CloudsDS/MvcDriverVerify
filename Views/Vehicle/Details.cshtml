@@ -1,0 +1,54 @@
+@model MvcDriverVerify.Models.Vehicle
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Vehicle</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Vregistration)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Vregistration)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.VMake)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.VMake)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.VModelName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.VModelName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.VModelYear)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.VModelYear)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.VParter)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.VParter.UNames)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.VPlatform)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.VPlatform.PName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.VId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

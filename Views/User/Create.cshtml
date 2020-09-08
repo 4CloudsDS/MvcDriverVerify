@@ -1,0 +1,69 @@
+@model MvcDriverVerify.Models.User
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>User</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UId" class="control-label"></label>
+                <input asp-for="UId" class="form-control" />
+                <span asp-validation-for="UId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UNames" class="control-label"></label>
+                <input asp-for="UNames" class="form-control" />
+                <span asp-validation-for="UNames" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UGender" class="control-label"></label>
+                <input asp-for="UGender" class="form-control" />
+                <span asp-validation-for="UGender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UAge" class="control-label"></label>
+                <input asp-for="UAge" class="form-control" />
+                <span asp-validation-for="UAge" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="URating" class="control-label"></label>
+                <input asp-for="URating" class="form-control" />
+                <span asp-validation-for="URating" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UVid" class="control-label"></label>
+                <select asp-for="UVid" class ="form-control" asp-items="ViewBag.UVid"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="UPartnerId" class="control-label"></label>
+                <select asp-for="UPartnerId" class ="form-control" asp-items="ViewBag.UPartnerId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="UUsertypeId" class="control-label"></label>
+                <select asp-for="UUsertypeId" class ="form-control" asp-items="ViewBag.UUsertypeId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="UPlatformId" class="control-label"></label>
+                <select asp-for="UPlatformId" class ="form-control" asp-items="ViewBag.UPlatformId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

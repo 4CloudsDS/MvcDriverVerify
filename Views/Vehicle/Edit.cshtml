@@ -1,0 +1,59 @@
+@model MvcDriverVerify.Models.Vehicle
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Vehicle</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="VId" />
+            <div class="form-group">
+                <label asp-for="Vregistration" class="control-label"></label>
+                <input asp-for="Vregistration" class="form-control" />
+                <span asp-validation-for="Vregistration" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VMake" class="control-label"></label>
+                <input asp-for="VMake" class="form-control" />
+                <span asp-validation-for="VMake" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VModelName" class="control-label"></label>
+                <input asp-for="VModelName" class="form-control" />
+                <span asp-validation-for="VModelName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VModelYear" class="control-label"></label>
+                <input asp-for="VModelYear" class="form-control" />
+                <span asp-validation-for="VModelYear" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VParterId" class="control-label"></label>
+                <select asp-for="VParterId" class="form-control" asp-items="ViewBag.VParterId"></select>
+                <span asp-validation-for="VParterId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VPlatformId" class="control-label"></label>
+                <select asp-for="VPlatformId" class="form-control" asp-items="ViewBag.VPlatformId"></select>
+                <span asp-validation-for="VPlatformId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

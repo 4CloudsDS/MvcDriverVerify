@@ -1,0 +1,261 @@
+D:\www\VerifyDriver\MvcDriverVerify\bin\Debug\netcoreapp2.2\MvcDriverVerify.deps.json
+D:\www\VerifyDriver\MvcDriverVerify\bin\Debug\netcoreapp2.2\MvcDriverVerify.runtimeconfig.json
+D:\www\VerifyDriver\MvcDriverVerify\bin\Debug\netcoreapp2.2\MvcDriverVerify.runtimeconfig.dev.json
+D:\www\VerifyDriver\MvcDriverVerify\bin\Debug\netcoreapp2.2\MvcDriverVerify.dll
+D:\www\VerifyDriver\MvcDriverVerify\bin\Debug\netcoreapp2.2\MvcDriverVerify.pdb
+D:\www\VerifyDriver\MvcDriverVerify\bin\Debug\netcoreapp2.2\MvcDriverVerify.Views.dll
+D:\www\VerifyDriver\MvcDriverVerify\bin\Debug\netcoreapp2.2\MvcDriverVerify.Views.pdb
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.csprojAssemblyReference.cache
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.csproj.CoreCompileInputs.cache
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.RazorAssemblyInfo.cache
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.RazorAssemblyInfo.cs
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.AssemblyInfoInputs.cache
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.AssemblyInfo.cs
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.TagHelpers.input.cache
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.TagHelpers.output.cache
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.RazorCoreGenerate.cache
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Home\Index.g.cshtml.cs
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Home\Privacy.g.cshtml.cs
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Shared\Error.g.cshtml.cs
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_CookieConsentPartial.g.cshtml.cs
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_Layout.g.cshtml.cs
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_ValidationScriptsPartial.g.cshtml.cs
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\_ViewImports.g.cshtml.cs
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\_ViewStart.g.cshtml.cs
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.RazorTargetAssemblyInfo.cache
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.RazorTargetAssemblyInfo.cs
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.Views.pdb
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.dll
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.pdb
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.csproj.CopyComplete
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\User\Create.g.cshtml.cs
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\User\Delete.g.cshtml.cs
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\User\Details.g.cshtml.cs
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\User\Edit.g.cshtml.cs
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\User\Index.g.cshtml.cs
+d:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Platform\Create.g.cshtml.cs
+d:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Platform\Delete.g.cshtml.cs
+d:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Platform\Details.g.cshtml.cs
+d:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Platform\Edit.g.cshtml.cs
+d:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Platform\Index.g.cshtml.cs
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Usertype\Create.g.cshtml.cs
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Usertype\Delete.g.cshtml.cs
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Usertype\Details.g.cshtml.cs
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Usertype\Edit.g.cshtml.cs
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Usertype\Index.g.cshtml.cs
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Vehicle\Create.g.cshtml.cs
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Vehicle\Delete.g.cshtml.cs
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Vehicle\Details.g.cshtml.cs
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Vehicle\Edit.g.cshtml.cs
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Vehicle\Index.g.cshtml.cs
+d:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Comments\Create.g.cshtml.cs
+d:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Comments\Delete.g.cshtml.cs
+d:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Comments\Details.g.cshtml.cs
+d:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Comments\Edit.g.cshtml.cs
+d:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Comments\Index.g.cshtml.cs
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\_ValidationScriptsPartial.g.cshtml.cs
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\_ViewStart.g.cshtml.cs
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_LoginPartial.g.cshtml.cs
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\Index.g.cshtml.cs
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\_ManageNav.g.cshtml.cs
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\_ViewImports.g.cshtml.cs
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Register.g.cshtml.cs
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\_ViewImports.g.cshtml.cs
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\_ViewImports.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\bin\Debug\netcoreapp2.2\MvcDriverVerify.deps.json
+C:\Users\mnamn\Downloads\MvcDriverVerify\bin\Debug\netcoreapp2.2\MvcDriverVerify.runtimeconfig.json
+C:\Users\mnamn\Downloads\MvcDriverVerify\bin\Debug\netcoreapp2.2\MvcDriverVerify.runtimeconfig.dev.json
+C:\Users\mnamn\Downloads\MvcDriverVerify\bin\Debug\netcoreapp2.2\MvcDriverVerify.dll
+C:\Users\mnamn\Downloads\MvcDriverVerify\bin\Debug\netcoreapp2.2\MvcDriverVerify.pdb
+C:\Users\mnamn\Downloads\MvcDriverVerify\bin\Debug\netcoreapp2.2\MvcDriverVerify.Views.dll
+C:\Users\mnamn\Downloads\MvcDriverVerify\bin\Debug\netcoreapp2.2\MvcDriverVerify.Views.pdb
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.csprojAssemblyReference.cache
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.csproj.CoreCompileInputs.cache
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.RazorAssemblyInfo.cache
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.RazorAssemblyInfo.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.AssemblyInfoInputs.cache
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.AssemblyInfo.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.TagHelpers.input.cache
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.TagHelpers.output.cache
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.RazorCoreGenerate.cache
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\Index.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\_ManageNav.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\_ViewImports.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Register.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\_ViewImports.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\_ValidationScriptsPartial.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\_ViewImports.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\_ViewStart.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Comments\Create.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Comments\Delete.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Comments\Details.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Comments\Edit.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Comments\Index.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Home\Index.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Home\Privacy.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Platform\Create.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Platform\Delete.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Platform\Details.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Platform\Edit.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Platform\Index.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Shared\Error.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_CookieConsentPartial.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_Layout.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_LoginPartial.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_ValidationScriptsPartial.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Usertype\Create.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Usertype\Delete.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Usertype\Details.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Usertype\Edit.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Usertype\Index.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\User\Create.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\User\Delete.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\User\Details.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\User\Edit.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\User\Index.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Vehicle\Create.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Vehicle\Delete.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Vehicle\Details.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Vehicle\Edit.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Vehicle\Index.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\_ViewImports.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\_ViewStart.g.cshtml.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.RazorTargetAssemblyInfo.cache
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.RazorTargetAssemblyInfo.cs
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.Views.pdb
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.dll
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.pdb
+C:\Users\mnamn\Downloads\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.csproj.CopyComplete
+F:\Practice\New folder (2)\MvcDriverVerify\bin\Debug\netcoreapp2.2\MvcDriverVerify.deps.json
+F:\Practice\New folder (2)\MvcDriverVerify\bin\Debug\netcoreapp2.2\MvcDriverVerify.runtimeconfig.json
+F:\Practice\New folder (2)\MvcDriverVerify\bin\Debug\netcoreapp2.2\MvcDriverVerify.runtimeconfig.dev.json
+F:\Practice\New folder (2)\MvcDriverVerify\bin\Debug\netcoreapp2.2\MvcDriverVerify.dll
+F:\Practice\New folder (2)\MvcDriverVerify\bin\Debug\netcoreapp2.2\MvcDriverVerify.pdb
+F:\Practice\New folder (2)\MvcDriverVerify\bin\Debug\netcoreapp2.2\MvcDriverVerify.Views.dll
+F:\Practice\New folder (2)\MvcDriverVerify\bin\Debug\netcoreapp2.2\MvcDriverVerify.Views.pdb
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.csproj.CoreCompileInputs.cache
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.RazorAssemblyInfo.cache
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.RazorAssemblyInfo.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.AssemblyInfoInputs.cache
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.AssemblyInfo.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.TagHelpers.input.cache
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.TagHelpers.output.cache
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.RazorCoreGenerate.cache
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\Index.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\_ManageNav.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\_ViewImports.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Register.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\_ViewImports.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\_ValidationScriptsPartial.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\_ViewImports.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\_ViewStart.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Comments\Create.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Comments\Delete.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Comments\Details.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Comments\Edit.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Comments\Index.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Home\Index.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Home\Privacy.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Platform\Create.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Platform\Delete.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Platform\Details.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Platform\Edit.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Platform\Index.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Shared\Error.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_CookieConsentPartial.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_Layout.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_LoginPartial.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_ValidationScriptsPartial.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Usertype\Create.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Usertype\Delete.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Usertype\Details.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Usertype\Edit.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Usertype\Index.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\User\Create.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\User\Delete.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\User\Details.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\User\Edit.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\User\Index.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Vehicle\Create.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Vehicle\Delete.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Vehicle\Details.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Vehicle\Edit.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Vehicle\Index.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\_ViewImports.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\_ViewStart.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.RazorTargetAssemblyInfo.cache
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.RazorTargetAssemblyInfo.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.Views.pdb
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.dll
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.pdb
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.csproj.CopyComplete
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Login.g.cshtml.cs
+F:\Practice\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.csprojAssemblyReference.cache
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\bin\Debug\netcoreapp2.2\appsettings.Development.json
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\bin\Debug\netcoreapp2.2\appsettings.json
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\bin\Debug\netcoreapp2.2\Properties\launchSettings.json
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\bin\Debug\netcoreapp2.2\MvcDriverVerify.deps.json
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\bin\Debug\netcoreapp2.2\MvcDriverVerify.runtimeconfig.json
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\bin\Debug\netcoreapp2.2\MvcDriverVerify.runtimeconfig.dev.json
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\bin\Debug\netcoreapp2.2\MvcDriverVerify.dll
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\bin\Debug\netcoreapp2.2\MvcDriverVerify.pdb
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\bin\Debug\netcoreapp2.2\MvcDriverVerify.Views.dll
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\bin\Debug\netcoreapp2.2\MvcDriverVerify.Views.pdb
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.csprojAssemblyReference.cache
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.RazorAssemblyInfo.cache
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.RazorAssemblyInfo.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.AssemblyInfoInputs.cache
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.AssemblyInfo.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.TagHelpers.input.cache
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.TagHelpers.output.cache
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.RazorCoreGenerate.cache
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Login.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\Index.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\_ManageNav.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\_ViewImports.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Register.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\_ViewImports.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\_ValidationScriptsPartial.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\_ViewImports.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\_ViewStart.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Comments\Create.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Comments\Delete.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Comments\Details.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Comments\Edit.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Comments\Index.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Home\Index.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Home\Privacy.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Platform\Create.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Platform\Delete.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Platform\Details.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Platform\Edit.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Platform\Index.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Shared\Error.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_CookieConsentPartial.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_Layout.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_LoginPartial.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Usertype\Create.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Usertype\Delete.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Usertype\Details.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Usertype\Edit.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Usertype\Index.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\User\Create.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\User\Delete.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\User\Details.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\User\Edit.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\User\Index.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Vehicle\Create.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Vehicle\Delete.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Vehicle\Details.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Vehicle\Edit.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\Vehicle\Index.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\_ViewImports.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Views\_ViewStart.cshtml.g.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.RazorTargetAssemblyInfo.cache
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.RazorTargetAssemblyInfo.cs
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.Views.pdb
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.dll
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.pdb
+F:\Practice\New folder (2)\New folder (2)\MvcDriverVerify\obj\Debug\netcoreapp2.2\MvcDriverVerify.csproj.CopyComplete
+D:\www\VerifyDriver\MvcDriverVerify\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Login.g.cshtml.cs
