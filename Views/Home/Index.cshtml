@@ -1,8 +1,178 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model DriverTrustDashboardViewModel
+
+@{
+    ViewData["Title"] = "Driver Trust Feed";
+    var featuredDriver = Model.Drivers.OrderByDescending(driver => driver.TrustScore).FirstOrDefault();
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section class="hero-panel" id="verify">
+    <div class="hero-panel__copy">
+        <span class="eyebrow">Driver reputation marketplace</span>
+        <h1>Verify the driver before the trip, contract, or hire.</h1>
+        <p>
+            Search verified driver profiles, read structured public feedback, and compare trust signals across rideshare,
+            delivery, trucking, and fleet work.
+        </p>
+        <form class="search-card" role="search">
+            <label for="driver-search">Driver, vehicle, platform, or region</label>
+            <div class="search-card__row">
+                <input id="driver-search" type="search" placeholder="Search: Thabo Mokoena, GP 42 MX, Bolt, Durban" />
+                <button type="submit">Verify</button>
+            </div>
+            <p class="search-card__status" data-search-status>Try a driver name, registration, platform, or city.</p>
+        </form>
+    </div>
+    <aside class="trust-card" aria-label="Featured trust profile">
+        <img src="~/images/person_2.jpg" alt="Driver profile portrait" />
+        <div>
+            <span class="status-pill status-pill--verified">@(Model.ApiConnected ? "Live API profile" : "Preview profile")</span>
+            <h2>@(featuredDriver?.Name ?? "Driver profile")</h2>
+            <p>@(featuredDriver?.Category ?? "Driver") · @(featuredDriver?.Region ?? "Region pending")</p>
+        </div>
+        <dl class="trust-metrics">
+            <div>
+                <dt>Trust</dt>
+                <dd>@(featuredDriver?.TrustScore ?? 0)</dd>
+            </div>
+            <div>
+                <dt>Reports</dt>
+                <dd>@(featuredDriver?.ReportCount ?? 0)</dd>
+            </div>
+            <div>
+                <dt>Risk</dt>
+                <dd>@(featuredDriver?.RiskLevel ?? "Review")</dd>
+            </div>
+        </dl>
+    </aside>
+</section>
+
+<section class="workspace-grid">
+    <aside class="side-panel" aria-label="Verification filters">
+        <h2>Verify By</h2>
+        <div class="filter-stack">
+            <button type="button" class="filter-chip is-active" data-filter-chip>All drivers</button>
+            <button type="button" class="filter-chip" data-filter-chip>Rideshare</button>
+            <button type="button" class="filter-chip" data-filter-chip>Delivery</button>
+            <button type="button" class="filter-chip" data-filter-chip>Trucking</button>
+            <button type="button" class="filter-chip" data-filter-chip>Fleet</button>
+        </div>
+        <div class="panel-breakout">
+            <span>API Status</span>
+            <strong>@(Model.ApiConnected ? "On" : Model.ApiStatus.StartsWith("API reachable") ? "Degraded" : "Off")</strong>
+            <p>@Model.ApiStatus</p>
+        </div>
+    </aside>
+
+    <section class="feed" id="feed" aria-label="Driver trust activity feed">
+        <div class="section-heading">
+            <span class="eyebrow">Live trust signals</span>
+            <h2>Community feed</h2>
+        </div>
+
+        @foreach (var driver in Model.Drivers)
+        {
+            <article class="feed-card @(driver.RiskLevel == "Review" ? "feed-card--alert" : string.Empty)">
+                <div class="feed-card__avatar">@driver.Initials</div>
+                <div class="feed-card__body">
+                    <div class="feed-card__meta">
+                        <strong>@driver.Name</strong>
+                        <span>@driver.Category · @driver.Region · @driver.PartnerName</span>
+                    </div>
+                    <p>@driver.ActivitySummary</p>
+                    <div class="signal-row">
+                        @foreach (var signal in driver.Signals)
+                        {
+                            <span class="signal @(signal.Contains("pending", StringComparison.OrdinalIgnoreCase) || signal.Contains("review", StringComparison.OrdinalIgnoreCase) ? "signal--watch" : string.Empty)">@signal</span>
+                        }
+                    </div>
+                </div>
+            </article>
+        }
+    </section>
+
+    <aside class="side-panel side-panel--profile" id="trust-profile" aria-label="Trust profile preview">
+        <h2>Trust Profile</h2>
+        <img src="~/images/img_2.jpg" alt="Driver vehicle on the road" class="profile-image" />
+        <div class="score-ring" aria-label="Trust score 86 out of 100">86</div>
+        <h3>Candidate Snapshot</h3>
+        <p>Balanced view of public feedback, employer confirmations, vehicle history, and unresolved reports.</p>
+        <ul class="check-list">
+            <li>Identity and vehicle verified</li>
+            <li>2 employer references</li>
+            <li>0 severe confirmed incidents</li>
+        </ul>
+    </aside>
+</section>
+
+<section class="operations-grid" id="report" aria-label="Feedback and candidate operations">
+    <article class="report-composer">
+        <div class="section-heading">
+            <span class="eyebrow">Structured contribution</span>
+            <h2>Submit a driver signal</h2>
+        </div>
+        <form class="signal-form">
+            <label>
+                Category
+                <select>
+                    <option>Safety or road conduct</option>
+                    <option>Passenger or customer experience</option>
+                    <option>Employer contract feedback</option>
+                    <option>Vehicle condition</option>
+                </select>
+            </label>
+            <label>
+                Severity
+                <input type="range" min="1" max="5" value="2" />
+            </label>
+            <label>
+                Context
+                <textarea rows="4" placeholder="Summarize what happened, where it happened, and what should be reviewed."></textarea>
+            </label>
+            <div class="form-actions">
+                <button type="button">Save draft</button>
+                <button type="button" class="button-strong">Submit for review</button>
+            </div>
+        </form>
+    </article>
+
+    <article class="compare-panel">
+        <div class="section-heading">
+            <span class="eyebrow">Employer workspace</span>
+            <h2>Candidate comparison</h2>
+        </div>
+        <div class="candidate-list">
+            @foreach (var driver in Model.Drivers.OrderByDescending(driver => driver.TrustScore).Take(3))
+            {
+                <div class="candidate-row">
+                    <span>@driver.Name</span>
+                    <strong>@driver.TrustScore</strong>
+                    <small>@driver.UserType · @driver.RiskLevel risk</small>
+                </div>
+            }
+        </div>
+    </article>
+</section>
+
+<section class="role-board" id="workspace" aria-label="Role based workspaces">
+    <div class="section-heading">
+        <span class="eyebrow">Role-aware workspace</span>
+        <h2>Built for every participant in the trust loop</h2>
+    </div>
+    <div class="role-grid">
+        <article class="role-card">
+            <span class="role-card__icon">01</span>
+            <h3>Employers and fleet owners</h3>
+            <p>Compare candidates, save shortlists, request verification, and submit structured post-contract feedback.</p>
+        </article>
+        <article class="role-card">
+            <span class="role-card__icon">02</span>
+            <h3>Drivers</h3>
+            <p>Claim a profile, correct stale details, respond to feedback, and build a portable reputation record.</p>
+        </article>
+        <article class="role-card">
+            <span class="role-card__icon">03</span>
+            <h3>Passengers and road users</h3>
+            <p>Submit moderated reports with context, category, severity, and evidence before signals affect reputation.</p>
+        </article>
+    </div>
+</section>

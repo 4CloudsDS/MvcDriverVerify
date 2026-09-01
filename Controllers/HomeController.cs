@@ -1,18 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using MvcDriverVerify.Models;
+using MvcDriverVerify.Services;
 
 namespace MvcDriverVerify.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly DriverMarketplaceService _driverMarketplaceService;
+
+        public HomeController(DriverMarketplaceService driverMarketplaceService)
         {
-            return View();
+            _driverMarketplaceService = driverMarketplaceService;
+        }
+
+        public async Task<IActionResult> Index(CancellationToken cancellationToken)
+        {
+            var dashboard = await _driverMarketplaceService.GetDashboardAsync(cancellationToken);
+
+            return View(dashboard);
         }
 
         public IActionResult Privacy()
