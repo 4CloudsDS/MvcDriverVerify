@@ -16,11 +16,10 @@
             <span class="brand__text">Verify Driver</span>
         </a>
         <nav class="topnav" aria-label="Primary navigation">
-            <a href="#feed">Feed</a>
-            <a href="#verify">Verify</a>
-            <a href="#report">Report</a>
-            <a href="#trust-profile">Profiles</a>
-            <a href="#workspace">Workspace</a>
+            <a asp-controller="Home" asp-action="Index">Home</a>
+            <a asp-controller="Verify" asp-action="Index">Verify</a>
+            <a asp-controller="Profiles" asp-action="Index">Profiles</a>
+            <a asp-controller="Admin" asp-action="Index">Admin</a>
         </nav>
         <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle dark and light theme">
             <span data-theme-label>Dark</span>

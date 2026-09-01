@@ -14,11 +14,17 @@ namespace MvcDriverVerify.Controllers
             _driverMarketplaceService = driverMarketplaceService;
         }
 
-        public async Task<IActionResult> Index(CancellationToken cancellationToken)
+        public IActionResult Index()
         {
-            var dashboard = await _driverMarketplaceService.GetDashboardAsync(cancellationToken);
+            return View(new DriverTrustDashboardViewModel());
+        }
 
-            return View(dashboard);
+        [HttpGet]
+        public async Task<IActionResult> Verify(string query, CancellationToken cancellationToken)
+        {
+            var dashboard = await _driverMarketplaceService.SearchDashboardAsync(query, cancellationToken);
+
+            return Json(dashboard);
         }
 
         public IActionResult Privacy()

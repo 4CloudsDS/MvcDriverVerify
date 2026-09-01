@@ -69,6 +69,91 @@ public sealed class DriverMarketplaceService
         }
     }
 
+    public Task<DriverTrustDashboardViewModel> SearchDashboardAsync(string? query, CancellationToken cancellationToken)
+    {
+        return SearchDashboardAsync(query, null, null, null, cancellationToken);
+    }
+
+    public async Task<DriverTrustDashboardViewModel> SearchDashboardAsync(string? query, string? mode, string? intent, string? relationshipType, CancellationToken cancellationToken)
+    {
+        var dashboard = await GetDashboardAsync(cancellationToken);
+        var cleanQuery = query?.Trim();
+        var cleanMode = string.IsNullOrWhiteSpace(mode) ? "profile" : mode.Trim();
+        var cleanIntent = intent?.Trim();
+        var cleanRelationshipType = relationshipType?.Trim();
+
+        if (string.IsNullOrWhiteSpace(cleanQuery))
+        {
+            return WithStatus(cleanMode.Equals("opportunity", StringComparison.OrdinalIgnoreCase)
+                ? "Choose your relationship goal, then search for a vehicle, platform, fleet, licence type, or role."
+                : "Enter a person, driver name, vehicle registration, partner, platform, or region to verify.", []);
+        }
+
+        var matches = dashboard.Drivers
+            .Where(driver => Matches(driver, cleanQuery, cleanMode))
+            .ToList();
+
+        return WithStatus(
+            matches.Count == 0
+                ? NoMatchStatus(cleanQuery, cleanMode, cleanIntent, cleanRelationshipType)
+                : MatchStatus(matches.Count, cleanQuery, cleanMode, cleanIntent, cleanRelationshipType),
+            matches);
+
+        DriverTrustDashboardViewModel WithStatus(string status, IReadOnlyList<DriverTrustCard> drivers) => new()
+        {
+            ApiConnected = dashboard.ApiConnected,
+            ApiStatus = status,
+            Drivers = drivers
+        };
+    }
+
+    private static string MatchStatus(int matchCount, string query, string mode, string? intent, string? relationshipType)
+    {
+        if (mode.Equals("opportunity", StringComparison.OrdinalIgnoreCase))
+        {
+            var context = string.Join(" / ", new[] { intent, relationshipType }.Where(value => !string.IsNullOrWhiteSpace(value)));
+
+            return $"Found {matchCount} potential relationship match{(matchCount == 1 ? string.Empty : "es")} for \"{query}\"{(string.IsNullOrWhiteSpace(context) ? "." : $" in {context}.")}";
+        }
+
+        return $"Found {matchCount} profile{(matchCount == 1 ? string.Empty : "s")} related to \"{query}\".";
+    }
+
+    private static string NoMatchStatus(string query, string mode, string? intent, string? relationshipType)
+    {
+        if (mode.Equals("opportunity", StringComparison.OrdinalIgnoreCase))
+        {
+            var context = string.Join(" / ", new[] { intent, relationshipType }.Where(value => !string.IsNullOrWhiteSpace(value)));
+
+            return $"No relationship matches found for \"{query}\"{(string.IsNullOrWhiteSpace(context) ? "." : $" in {context}.")} Try a vehicle registration, platform, fleet owner, driver type, or licence requirement.";
+        }
+
+        return $"No driver profile matched \"{query}\". You can submit a structured signal or request verification.";
+    }
+
+    private static bool Matches(DriverTrustCard driver, string query, string mode)
+    {
+        if (mode.Equals("profile", StringComparison.OrdinalIgnoreCase))
+        {
+            return Contains(driver.Name, query)
+                || Contains(driver.VehicleRegistration, query);
+        }
+
+        return Contains(driver.Name, query)
+            || Contains(driver.Category, query)
+            || Contains(driver.Region, query)
+            || Contains(driver.VehicleRegistration, query)
+            || Contains(driver.VehicleDescription, query)
+            || Contains(driver.PartnerName, query)
+            || Contains(driver.UserType, query)
+            || driver.Signals.Any(signal => Contains(signal, query));
+    }
+
+    private static bool Contains(string value, string query)
+    {
+        return value.Contains(query, StringComparison.OrdinalIgnoreCase);
+    }
+
     private static DriverTrustCard MapDriver(ApiUserDto user)
     {
         var rating = user.URating;
