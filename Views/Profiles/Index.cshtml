@@ -1,0 +1,66 @@
+@model DriverTrustDashboardViewModel
+
+@{
+    ViewData["Title"] = "Profiles";
+}
+
+<section class="page-header profile-search-header">
+    <span class="eyebrow">Relationship search</span>
+    <h1>Find the right driver, owner, vehicle, or fleet partner.</h1>
+    <p>Search trusted profiles before starting a hire, vehicle rental, fleet contract, delivery route, or platform partnership.</p>
+</section>
+
+<section class="profiles-search-window" aria-label="Profile search">
+    <div class="search-mode-tabs" role="tablist" aria-label="Profile search mode">
+        <button type="button" class="search-mode-tab is-active" data-search-mode-tab="profile">Known profile</button>
+        <button type="button" class="search-mode-tab" data-search-mode-tab="opportunity">Opportunity</button>
+    </div>
+
+    <form class="search-card profile-search-card" role="search" data-verify-url="@Url.Action("Search", "Profiles")" data-search-mode="profile">
+        <label for="profile-search" data-profile-search-label>Find a specific profile</label>
+        <div class="search-card__row">
+            <input id="profile-search" type="search" placeholder="Search: James Patrick or WWW 118 LM" data-profile-search-input />
+            <button type="submit">Search</button>
+        </div>
+        <div class="match-intent is-hidden" aria-label="Opportunity search intent" data-opportunity-controls>
+            <label>
+                I am
+                <select data-intent-select>
+                    <option value="looking-for-driver">Looking for a driver</option>
+                    <option value="driver-looking-for-owner">A driver looking for an owner</option>
+                    <option value="fleet-owner-looking-for-partners">A fleet owner looking for partners</option>
+                    <option value="platform-vetting-profiles">A platform vetting profiles</option>
+                </select>
+            </label>
+            <label>
+                Relationship type
+                <select data-relationship-select>
+                    <option>Employment</option>
+                    <option>Vehicle hire</option>
+                </select>
+            </label>
+        </div>
+        <p class="search-card__status" data-search-status>Search for a known person/profile by name or vehicle registration.</p>
+    </form>
+
+    <section class="profiles-results" aria-label="Profile search results">
+        <div class="section-heading">
+            <span class="eyebrow">Potential matches</span>
+            <h2>Profiles</h2>
+        </div>
+        <div class="empty-state" data-feed-empty>
+            <h3>No profile search yet</h3>
+            <p>Matches will appear here after you search for a driver, owner, vehicle, fleet, platform, or capability.</p>
+        </div>
+        <div class="feed-results profile-results" data-feed-results data-results-mode="profiles"></div>
+    </section>
+
+    <aside class="compare-panel profile-comparison is-hidden" data-profile-comparison aria-label="Ranked opportunity comparison">
+        <div class="section-heading">
+            <span class="eyebrow">Opportunity ranking</span>
+            <h2>Candidate comparison</h2>
+        </div>
+        <p>Opportunity searches rank matches by trust score while keeping risk and relationship fit visible.</p>
+        <div class="candidate-list" data-comparison-results></div>
+    </aside>
+</section>

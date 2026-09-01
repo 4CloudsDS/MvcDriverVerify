@@ -1,0 +1,78 @@
+@model DriverTrustDashboardViewModel
+
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<section class="page-header">
+    <span class="eyebrow">Owner workspace</span>
+    <h1>Trust operations dashboard</h1>
+    <p>Monitor integration health, moderation load, review queues, and platform activity.</p>
+</section>
+
+<section class="workspace-grid admin-grid">
+    <aside class="side-panel" aria-label="Verification filters">
+        <h2>Verify By</h2>
+        <div class="filter-stack">
+            <button type="button" class="filter-chip is-active" data-filter-chip>All drivers</button>
+            <button type="button" class="filter-chip" data-filter-chip>Rideshare</button>
+            <button type="button" class="filter-chip" data-filter-chip>Delivery</button>
+            <button type="button" class="filter-chip" data-filter-chip>Trucking</button>
+            <button type="button" class="filter-chip" data-filter-chip>Fleet</button>
+        </div>
+        <div class="panel-breakout">
+            <span>API Status</span>
+            <strong>@(Model.ApiConnected ? "On" : Model.ApiStatus.StartsWith("API reachable") ? "Degraded" : "Off")</strong>
+            <p>@Model.ApiStatus</p>
+        </div>
+    </aside>
+
+    <section class="feed" aria-label="Driver trust activity feed">
+        <div class="section-heading">
+            <span class="eyebrow">Live trust signals</span>
+            <h2>Community feed</h2>
+        </div>
+
+        @foreach (var driver in Model.Drivers)
+        {
+            <article class="feed-card @(driver.RiskLevel == "Review" ? "feed-card--alert" : string.Empty)">
+                <div class="feed-card__avatar">@driver.Initials</div>
+                <div class="feed-card__body">
+                    <div class="feed-card__meta">
+                        <strong>@driver.Name</strong>
+                        <span>@driver.Category · @driver.Region · @driver.PartnerName</span>
+                    </div>
+                    <p>@driver.ActivitySummary</p>
+                    <div class="signal-row">
+                        @foreach (var signal in driver.Signals)
+                        {
+                            <span class="signal @(signal.Contains("pending", StringComparison.OrdinalIgnoreCase) || signal.Contains("review", StringComparison.OrdinalIgnoreCase) ? "signal--watch" : string.Empty)">@signal</span>
+                        }
+                    </div>
+                </div>
+            </article>
+        }
+    </section>
+
+</section>
+
+<section class="operations-grid" aria-label="Admin operations">
+    <article class="compare-panel">
+        <div class="section-heading">
+            <span class="eyebrow">Moderation</span>
+            <h2>Review queue</h2>
+        </div>
+        <div class="candidate-list">
+            <div class="candidate-row">
+                <span>Pending public reports</span>
+                <strong>14</strong>
+                <small>Awaiting owner review</small>
+            </div>
+            <div class="candidate-row">
+                <span>Profiles needing merge</span>
+                <strong>2</strong>
+                <small>Possible duplicate entities</small>
+            </div>
+        </div>
+    </article>
+</section>

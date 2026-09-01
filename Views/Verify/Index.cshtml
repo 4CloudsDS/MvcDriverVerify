@@ -1,0 +1,130 @@
+@model DriverTrustDashboardViewModel
+
+@{
+    ViewData["Title"] = "Verify";
+}
+
+<section class="page-header verify-header">
+    <span class="eyebrow">Verification workspace</span>
+    <h1>Build the evidence packet behind every trusted relationship.</h1>
+    <p>Upload support documents, link counterparties, and submit a verification case for owner, driver, vehicle, fleet, or platform review.</p>
+</section>
+
+<section class="verify-workspace" aria-label="Verification case workspace">
+    <form class="verification-case" data-verification-form>
+        <article class="verify-card verify-card--primary">
+            <div class="section-heading">
+                <span class="eyebrow">Case setup</span>
+                <h2>What are you verifying?</h2>
+            </div>
+            <div class="case-grid">
+                <label>
+                    Case type
+                    <select data-case-type>
+                        <option>Driver identity</option>
+                        <option>Driver to owner relationship</option>
+                        <option>Driver to vehicle relationship</option>
+                        <option>Vehicle to owner relationship</option>
+                        <option>Employment or referral history</option>
+                        <option>Platform or fleet association</option>
+                    </select>
+                </label>
+                <label>
+                    Relationship context
+                    <input type="text" data-verify-context placeholder="Vehicle hire, employment, fleet contract" />
+                </label>
+                <label>
+                    Primary profile
+                    <input type="text" data-verify-profile placeholder="Driver, owner, fleet, or platform name" />
+                </label>
+                <label>
+                    Counterparty
+                    <input type="text" placeholder="Owner, driver, vehicle, employer, or platform" />
+                </label>
+            </div>
+        </article>
+
+        <article class="verify-card">
+            <div class="section-heading">
+                <span class="eyebrow">Evidence</span>
+                <h2>Support documents</h2>
+            </div>
+            <div class="evidence-grid">
+                <label class="evidence-card">
+                    <span>Driver licence</span>
+                    <strong>Licence code, expiry, identity match</strong>
+                    <input type="file" accept="image/*,.pdf" data-evidence-input />
+                </label>
+                <label class="evidence-card">
+                    <span>Vehicle proof</span>
+                    <strong>Registration, ownership, or hire agreement</strong>
+                    <input type="file" accept="image/*,.pdf" data-evidence-input />
+                </label>
+                <label class="evidence-card">
+                    <span>Referral</span>
+                    <strong>Former employer, owner, fleet, or platform document</strong>
+                    <input type="file" accept="image/*,.pdf" data-evidence-input />
+                </label>
+            </div>
+            <p class="verification-status" data-evidence-status>No documents selected yet.</p>
+        </article>
+
+        <article class="verify-card verify-card--split">
+            <div>
+                <div class="section-heading">
+                    <span class="eyebrow">Confirmation</span>
+                    <h2>Counterparty checks</h2>
+                </div>
+                <div class="verification-checklist">
+                    <label><input type="checkbox" data-verify-check /> Driver confirms relationship details</label>
+                    <label><input type="checkbox" data-verify-check /> Owner/fleet confirms vehicle or employment terms</label>
+                    <label><input type="checkbox" data-verify-check /> Submitted documents match the claimed entity</label>
+                    <label><input type="checkbox" data-verify-check /> Public trust profile can show approved signal</label>
+                </div>
+            </div>
+            <aside class="case-timeline" aria-label="Verification review timeline">
+                <span class="timeline-step is-active">Draft</span>
+                <span class="timeline-step">Submitted</span>
+                <span class="timeline-step">Counterparty review</span>
+                <span class="timeline-step">Verified signal</span>
+            </aside>
+        </article>
+
+        <div class="verification-actions">
+            <p class="verification-status" data-verification-status>Complete the case details, attach evidence, then submit verification.</p>
+            <button type="submit" class="button-strong verify-submit">Verify</button>
+        </div>
+    </form>
+
+    <aside class="verify-side-stack">
+        <section class="verify-card trust-decision-card" data-trust-cue aria-label="Trust profile cue">
+            <div class="section-heading">
+                <span class="eyebrow">Trust cue</span>
+                <h2>Relationship signal</h2>
+            </div>
+            <div class="score-ring" data-trust-cue-score aria-label="Trust score awaiting relationship context">--</div>
+            <h3 data-trust-cue-name>No profile context yet</h3>
+            <p data-trust-cue-summary>Start from Profiles or fill in the case details to judge whether this relationship should be encouraged or reviewed carefully.</p>
+            <div class="linked-entities" data-trust-cue-links>
+                <div class="linked-entity">
+                    <span>Risk</span>
+                    <strong data-trust-cue-risk>Unknown</strong>
+                </div>
+            </div>
+        </section>
+
+        <section class="verify-card verify-guidance">
+        <div class="section-heading">
+            <span class="eyebrow">Trust output</span>
+            <h2>What this creates</h2>
+        </div>
+        <p>Approved verification packets become trust signals on profile search, landing-page checks, and future owner/admin dashboards.</p>
+        <ul class="check-list">
+            <li>Verified driver-to-owner relationship</li>
+            <li>Verified driver-to-vehicle relationship</li>
+            <li>Verified licence or referral evidence</li>
+            <li>Disputable audit trail for fairness</li>
+        </ul>
+        </section>
+    </aside>
+</section>
