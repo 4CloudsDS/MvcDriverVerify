@@ -65,10 +65,10 @@
             <span class="eyebrow">Structured contribution</span>
             <h2>Submit a driver signal</h2>
         </div>
-        <form class="signal-form">
+        <form class="signal-form" data-signal-form>
             <label>
                 Category
-                <select>
+                <select data-signal-category>
                     <option>Safety or road conduct</option>
                     <option>Passenger or customer experience</option>
                     <option>Employer contract feedback</option>
@@ -77,15 +77,16 @@
             </label>
             <label>
                 Severity
-                <input type="range" min="1" max="5" value="2" />
+                <input type="range" min="1" max="5" value="2" data-signal-severity />
             </label>
             <label>
                 Context
-                <textarea rows="4" placeholder="Summarize what happened, where it happened, and what should be reviewed."></textarea>
+                <textarea rows="4" placeholder="Summarize what happened, where it happened, and what should be reviewed." data-signal-context></textarea>
             </label>
+            <p class="form-status" data-signal-status aria-live="polite">Structured signals are saved for moderation before they affect trust.</p>
             <div class="form-actions">
-                <button type="button">Save draft</button>
-                <button type="button" class="button-strong">Submit for review</button>
+                <button type="button" data-signal-draft>Save draft</button>
+                <button type="submit" class="button-strong">Submit for review</button>
             </div>
         </form>
     </article>

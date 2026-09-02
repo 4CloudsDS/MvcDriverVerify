@@ -65,6 +65,42 @@ textarea {
   font: inherit;
 }
 
+button,
+input,
+select,
+textarea,
+a {
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+main:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent) 72%, #ffffff);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
+  transform: translateY(-150%);
+  border-radius: 999px;
+  padding: 0.7rem 1rem;
+  background: var(--text);
+  color: var(--bg);
+  font-weight: 800;
+  box-shadow: var(--shadow);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
 .app-shell__topbar {
   position: sticky;
   top: 0;
@@ -263,6 +299,14 @@ h3 {
   color: #17130a;
   cursor: pointer;
   font-weight: 800;
+}
+
+.search-card button:hover,
+.profile-match-card__action:hover,
+.form-actions button:hover,
+.verify-submit:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.16);
 }
 
 .profiles-search-window {
@@ -508,6 +552,13 @@ h3 {
   box-shadow: var(--shadow);
 }
 
+.profile-match-card:hover,
+.evidence-card:hover,
+.role-card:hover {
+  border-color: color-mix(in srgb, var(--brand) 42%, var(--border));
+  transform: translateY(-2px);
+}
+
 .profile-match-card__top {
   display: flex;
   gap: 0.8rem;
@@ -559,6 +610,12 @@ h3 {
   border-radius: var(--radius);
   background: var(--surface);
   color: var(--muted);
+}
+
+.empty-state,
+.verification-status,
+.search-card__status {
+  overflow-wrap: anywhere;
 }
 
 .empty-state h3 {
@@ -710,6 +767,20 @@ h3 {
 
 .signal-form input[type="range"] {
   accent-color: var(--brand);
+}
+
+.form-status {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.form-status.is-success {
+  color: var(--success);
+}
+
+.form-status.is-warning {
+  color: var(--accent);
 }
 
 .form-actions {
@@ -1028,5 +1099,26 @@ h3 {
 
   .search-card button {
     min-height: 3rem;
+  }
+
+  .hero-panel__copy h1,
+  .page-header h1 {
+    max-width: 100%;
+    font-size: clamp(2.3rem, 15vw, 4rem);
+  }
+
+  .trust-metrics,
+  .profile-match-card__score,
+  .candidate-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
   }
 }

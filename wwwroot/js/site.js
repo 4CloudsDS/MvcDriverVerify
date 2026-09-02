@@ -33,6 +33,12 @@ const profileRisk = document.querySelector('[data-profile-risk]');
 const profileLinks = document.querySelector('[data-profile-links]');
 const feedEmpty = document.querySelector('[data-feed-empty]');
 const feedResults = document.querySelector('[data-feed-results]');
+const signalForm = document.querySelector('[data-signal-form]');
+const signalCategory = document.querySelector('[data-signal-category]');
+const signalSeverity = document.querySelector('[data-signal-severity]');
+const signalContext = document.querySelector('[data-signal-context]');
+const signalStatus = document.querySelector('[data-signal-status]');
+const signalDraft = document.querySelector('[data-signal-draft]');
 const storedTheme = localStorage.getItem('verify-driver-theme');
 const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
@@ -313,6 +319,43 @@ verificationForm?.addEventListener('submit', (event) => {
 
 	verificationStatus.textContent = `Verification packet ready: ${selectedEvidenceCount} document${selectedEvidenceCount === 1 ? '' : 's'} attached and ${checkedCount} confirmation check${checkedCount === 1 ? '' : 's'} marked. API submission comes next.`;
 });
+
+signalDraft?.addEventListener('click', () => {
+	const context = signalContext?.value.trim() || '';
+	updateSignalStatus(
+		context
+			? 'Draft signal saved locally for review. Backend moderation submission is pending.'
+			: 'Add context before saving a useful moderation draft.',
+		context ? 'success' : 'warning'
+	);
+});
+
+signalForm?.addEventListener('submit', (event) => {
+	event.preventDefault();
+
+	const context = signalContext?.value.trim() || '';
+
+	if (context.length < 20) {
+		updateSignalStatus('Add at least 20 characters of context so moderators can review the signal fairly.', 'warning');
+		signalContext?.focus();
+		return;
+	}
+
+	updateSignalStatus(
+		`${signalCategory?.value || 'Driver'} signal queued for moderation at severity ${signalSeverity?.value || '1'}. API submission is pending future backend implementation.`,
+		'success'
+	);
+});
+
+function updateSignalStatus(message, tone) {
+	if (!signalStatus) {
+		return;
+	}
+
+	signalStatus.textContent = message;
+	signalStatus.classList.toggle('is-success', tone === 'success');
+	signalStatus.classList.toggle('is-warning', tone === 'warning');
+}
 
 function hydrateVerificationContext() {
 	if (!verificationForm) {
