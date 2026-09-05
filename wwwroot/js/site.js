@@ -13,6 +13,9 @@ const verificationStatus = document.querySelector('[data-verification-status]');
 const evidenceStatus = document.querySelector('[data-evidence-status]');
 const evidenceInputs = document.querySelectorAll('[data-evidence-input]');
 const verificationChecks = document.querySelectorAll('[data-verify-check]');
+const profileType = document.querySelector('[data-profile-type]');
+const caseGuidance = document.querySelector('[data-case-guidance]');
+const evidenceCards = document.querySelectorAll('[data-evidence-card]');
 const verifyProfile = document.querySelector('[data-verify-profile]');
 const verifyContext = document.querySelector('[data-verify-context]');
 const verifyCounterparty = document.querySelector('[data-verify-counterparty]');
@@ -25,6 +28,7 @@ const trustCueLinks = document.querySelector('[data-trust-cue-links]');
 const profileComparison = document.querySelector('[data-profile-comparison]');
 const comparisonResults = document.querySelector('[data-comparison-results]');
 const filterChips = document.querySelectorAll('[data-filter-chip]');
+const adminDashboard = document.querySelector('[data-admin-dashboard-url]');
 const profilePanel = document.querySelector('[data-profile-panel]');
 const profileStatus = document.querySelector('[data-profile-status]');
 const profileName = document.querySelector('[data-profile-name]');
@@ -126,6 +130,7 @@ async function submitVerificationCase(profileId, selectedEvidenceCount, checkedC
 setTheme(storedTheme || (prefersDark ? 'dark' : 'light'));
 configureRelationshipOptions();
 hydrateVerificationContext();
+configureVerificationProfileType();
 
 themeToggle?.addEventListener('click', () => {
 	const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
@@ -140,7 +145,7 @@ searchForm?.addEventListener('submit', (event) => {
     const searchMode = searchForm.dataset.searchMode || 'verification';
 
 	if (!query) {
-		searchStatus.textContent = searchMode === 'profiles'
+		searchStatus.textContent = searchMode === 'profile'
 			? 'Enter a person, driver, owner, vehicle, fleet, or platform to search relationships.'
 			: searchMode === 'opportunity'
 				? 'Enter a vehicle, platform, fleet, licence type, location, or role to search opportunities.'
@@ -196,11 +201,13 @@ searchModeTabs.forEach((tab) => {
 });
 
 intentSelect?.addEventListener('change', configureRelationshipOptions);
+profileType?.addEventListener('change', configureVerificationProfileType);
 
 filterChips.forEach((chip) => {
 	chip.addEventListener('click', () => {
 		filterChips.forEach((item) => item.classList.remove('is-active'));
 		chip.classList.add('is-active');
+		loadAdminDashboard(chip.dataset.marketFilter || chip.textContent?.trim() || 'All drivers');
 	});
 });
 
@@ -213,7 +220,7 @@ async function loadVerification(verifyUrl, query) {
 		}
 
 		if (intentSelect && !opportunityControls?.classList.contains('is-hidden')) {
-			params.set('intent', intentSelect.selectedOptions[0]?.textContent?.trim() || intentSelect.value);
+			params.set('intent', intentSelect.value);
 		}
 
 		if (relationshipSelect && !opportunityControls?.classList.contains('is-hidden')) {
@@ -339,6 +346,7 @@ function profileMatchCard(driver) {
 	action.dataset.riskLevel = driver.riskLevel;
 	action.dataset.vehicle = `${driver.vehicleRegistration} · ${driver.vehicleDescription}`;
 	action.dataset.partner = driver.partnerName;
+	action.dataset.userType = driver.userType || '';
     action.dataset.relationshipContext = searchForm?.dataset.searchMode === 'opportunity' && relationshipSelect
         ? relationshipSelect.value
         : 'Relationship verification';
@@ -367,6 +375,7 @@ document.addEventListener('click', (event) => {
 	const params = new URLSearchParams({
 		profile: action.dataset.profileName || '',
 		profileId: action.dataset.userId || '',
+		userType: action.dataset.userType || '',
 		context: action.dataset.relationshipContext || 'Relationship verification',
 		trust: action.dataset.trustScore || '',
 		risk: action.dataset.riskLevel || '',
@@ -455,7 +464,126 @@ function hydrateVerificationContext() {
 		verifyContext.value = params.get('context') || '';
 	}
 
+	if (profileType && params.has('userType')) {
+		const profileRole = normaliseProfileType(params.get('userType') || '');
+		const matchingOption = Array.from(profileType.options).find((option) => option.value === profileRole);
+		if (matchingOption) {
+			profileType.value = profileRole;
+		}
+	}
+
 	hydrateTrustCue(params);
+	configureVerificationProfileType();
+}
+
+async function configureVerificationProfileType() {
+	if (!profileType || !caseType || !caseGuidance) {
+		return;
+	}
+
+	const selectedType = profileType.value || 'Driver';
+	const rules = await loadVerificationRules(selectedType);
+
+	caseType.replaceChildren(...rules.allowedCaseTypes.map((label) => {
+		const option = document.createElement('option');
+		option.textContent = label;
+		return option;
+	}));
+	caseGuidance.textContent = rules.guidance;
+
+	evidenceCards.forEach((card) => {
+		const appliesTo = card.dataset.evidenceApplies || '';
+		const isVisible = appliesTo.includes(selectedType);
+		card.classList.toggle('is-hidden', !isVisible);
+		if (!isVisible) {
+			const input = card.querySelector('input');
+			if (input) {
+				input.value = '';
+			}
+		}
+	});
+
+	updateEvidenceStatus();
+}
+
+async function loadVerificationRules(selectedType) {
+	const fallback = {
+		allowedCaseTypes: ['Driver identity', 'Driver to owner relationship'],
+		requiredEvidenceTypes: ['Driver licence'],
+		guidance: 'Driver profiles should verify identity and licence evidence before relationship approval.'
+	};
+	const rulesUrl = verificationForm?.dataset.verificationRulesUrl;
+	if (!rulesUrl) {
+		return fallback;
+	}
+
+	try {
+		const response = await fetch(`${rulesUrl}?profileType=${encodeURIComponent(selectedType)}`, {
+			headers: { Accept: 'application/json' }
+		});
+		if (!response.ok) {
+			throw new Error(`Verification rules returned ${response.status}`);
+		}
+
+		return await response.json();
+	} catch (error) {
+		console.warn(error);
+		return fallback;
+	}
+}
+
+async function loadAdminDashboard(market) {
+	if (!adminDashboard) {
+		return;
+	}
+
+	try {
+		const response = await fetch(`${adminDashboard.dataset.adminDashboardUrl}?market=${encodeURIComponent(market)}`, {
+			headers: { Accept: 'application/json' }
+		});
+		if (!response.ok) {
+			throw new Error(`Admin dashboard returned ${response.status}`);
+		}
+
+		const dashboard = await response.json();
+		setText('[data-admin-profiles]', dashboard.adminTrustSignals?.profilesMonitored);
+		setText('[data-admin-review-risk]', dashboard.adminTrustSignals?.reviewRisk);
+		setText('[data-admin-high-risk]', dashboard.adminTrustSignals?.highRisk);
+		setText('[data-admin-average-trust]', dashboard.adminTrustSignals?.averageTrustScore);
+		setText('[data-admin-feedback]', dashboard.moderationQueue?.pendingFeedback);
+		setText('[data-admin-cases]', dashboard.moderationQueue?.verificationCases);
+		setText('[data-admin-total-relationships]', dashboard.adminSeedCoverage?.totalRelationships);
+		setText('[data-admin-available-relationships]', dashboard.adminSeedCoverage?.availableRelationships);
+		setText('[data-admin-verified-relationships]', dashboard.adminSeedCoverage?.verifiedRelationships);
+		const types = dashboard.adminSeedCoverage?.relationshipTypes || [];
+		setText('[data-admin-relationship-type-count]', types.length);
+		setText('[data-admin-relationship-types]', types.length === 0 ? 'No relationship types loaded' : types.join(', '));
+	} catch (error) {
+		console.warn(error);
+	}
+}
+
+function setText(selector, value) {
+	const element = document.querySelector(selector);
+	if (element && value !== undefined && value !== null) {
+		element.textContent = value;
+	}
+}
+
+function normaliseProfileType(userType) {
+	if (/owner/i.test(userType)) {
+		return 'Owner';
+	}
+
+	if (/fleet/i.test(userType)) {
+		return 'Fleet';
+	}
+
+	if (/platform/i.test(userType)) {
+		return 'Platform';
+	}
+
+	return 'Driver';
 }
 
 function hydrateTrustCue(params) {

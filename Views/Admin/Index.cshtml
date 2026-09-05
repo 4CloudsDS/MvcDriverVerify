@@ -7,75 +7,73 @@
 <section class="page-header">
     <span class="eyebrow">Owner workspace</span>
     <h1>Trust operations dashboard</h1>
-    <p>Monitor integration health, moderation load, review queues, and platform activity.</p>
+    <p>Filter platform scope, monitor live trust signals, review contested items, and confirm seed relationship coverage.</p>
 </section>
 
-<section class="workspace-grid admin-grid">
-    <aside class="side-panel" aria-label="Verification filters">
-        <h2>Verify By</h2>
+<section class="workspace-grid admin-grid" data-admin-dashboard-url="@Url.Action("Dashboard", "Admin")">
+    <aside class="side-panel admin-panel--filter" aria-label="Platform filters">
+        <h2>Filter</h2>
+        <p>Scope trust operations by platform or driver market.</p>
         <div class="filter-stack">
-            <button type="button" class="filter-chip is-active" data-filter-chip>All drivers</button>
-            <button type="button" class="filter-chip" data-filter-chip>Rideshare</button>
-            <button type="button" class="filter-chip" data-filter-chip>Delivery</button>
-            <button type="button" class="filter-chip" data-filter-chip>Trucking</button>
-            <button type="button" class="filter-chip" data-filter-chip>Fleet</button>
+            <button type="button" class="filter-chip is-active" data-filter-chip data-market-filter="All drivers">All drivers</button>
+            <button type="button" class="filter-chip" data-filter-chip data-market-filter="Rideshare">Rideshare</button>
+            <button type="button" class="filter-chip" data-filter-chip data-market-filter="Delivery">Delivery</button>
+            <button type="button" class="filter-chip" data-filter-chip data-market-filter="Trucking">Trucking</button>
+            <button type="button" class="filter-chip" data-filter-chip data-market-filter="Fleet">Fleet</button>
         </div>
         <div class="panel-breakout">
             <span>API Status</span>
             <strong>@(Model.ApiConnected ? "On" : Model.ApiStatus.StartsWith("API reachable") ? "Degraded" : "Off")</strong>
             <p>@Model.ApiStatus</p>
         </div>
-        <div class="panel-breakout">
-            <span>Moderation API</span>
-            <strong>@(Model.ModerationQueue.PendingFeedback + Model.ModerationQueue.VerificationCases)</strong>
-            <p>@Model.ModerationQueue.Status</p>
-        </div>
     </aside>
 
-    <section class="feed" aria-label="Driver trust activity feed">
+    <section class="feed admin-panel--signals" aria-label="Live trust signals">
         <div class="section-heading">
             <span class="eyebrow">Live trust signals</span>
-            <h2>Community feed</h2>
-        </div>
-
-        @foreach (var driver in Model.Drivers)
-        {
-            <article class="feed-card @(driver.RiskLevel == "Review" ? "feed-card--alert" : string.Empty)">
-                <div class="feed-card__avatar">@driver.Initials</div>
-                <div class="feed-card__body">
-                    <div class="feed-card__meta">
-                        <strong>@driver.Name</strong>
-                        <span>@driver.Category · @driver.Region · @driver.PartnerName</span>
-                    </div>
-                    <p>@driver.ActivitySummary</p>
-                    <div class="signal-row">
-                        @foreach (var signal in driver.Signals)
-                        {
-                            <span class="signal @(signal.Contains("pending", StringComparison.OrdinalIgnoreCase) || signal.Contains("review", StringComparison.OrdinalIgnoreCase) ? "signal--watch" : string.Empty)">@signal</span>
-                        }
-                    </div>
-                </div>
-            </article>
-        }
-    </section>
-
-</section>
-
-<section class="operations-grid" aria-label="Admin operations">
-    <article class="compare-panel">
-        <div class="section-heading">
-            <span class="eyebrow">Moderation</span>
-            <h2>Review queue</h2>
+            <h2>Network health</h2>
         </div>
         <div class="candidate-list">
             <div class="candidate-row">
-                <span>Pending public reports</span>
-                <strong>@Model.ModerationQueue.PendingFeedback</strong>
-                <small>Loaded from VerifyDriverAPI moderation queue</small>
+                <span>Profiles monitored</span>
+                <strong data-admin-profiles>@Model.AdminTrustSignals.ProfilesMonitored</strong>
+                <small>Loaded from VerifyDriverAPI trust signal aggregate</small>
             </div>
             <div class="candidate-row">
-                <span>Verification cases</span>
-                <strong>@Model.ModerationQueue.VerificationCases</strong>
+                <span>Review risk</span>
+                <strong data-admin-review-risk>@Model.AdminTrustSignals.ReviewRisk</strong>
+                <small>Profiles carrying a review-level risk signal</small>
+            </div>
+            <div class="candidate-row">
+                <span>High risk</span>
+                <strong data-admin-high-risk>@Model.AdminTrustSignals.HighRisk</strong>
+                <small>Profiles needing admin attention</small>
+            </div>
+            <div class="candidate-row">
+                <span>Average trust</span>
+                <strong data-admin-average-trust>@Model.AdminTrustSignals.AverageTrustScore</strong>
+                <small>Current platform-filtered trust score baseline</small>
+            </div>
+        </div>
+    </section>
+</section>
+
+<section class="operations-grid" aria-label="Admin operations">
+    <article class="compare-panel admin-panel--moderation">
+        <div class="section-heading">
+            <span class="eyebrow">Moderation</span>
+            <h2>Contested queue</h2>
+        </div>
+        <p class="form-status">Only disputed, rejected, pending, or counterparty-review items should be pulled into this queue. General community feed comments are excluded from the admin workspace.</p>
+        <div class="candidate-list">
+            <div class="candidate-row">
+                <span>Contested public reports</span>
+                <strong data-admin-feedback>@Model.ModerationQueue.PendingFeedback</strong>
+                <small>Pending or disputed reports loaded from VerifyDriverAPI moderation queue</small>
+            </div>
+            <div class="candidate-row">
+                <span>Relationship verification cases</span>
+                <strong data-admin-cases>@Model.ModerationQueue.VerificationCases</strong>
                 <small>Draft, submitted, counterparty review, disputed, or rejected cases</small>
             </div>
             <div class="candidate-row">
@@ -90,7 +88,7 @@
             </div>
         </div>
     </article>
-    <article class="compare-panel">
+    <article class="compare-panel admin-panel--coverage">
         <div class="section-heading">
             <span class="eyebrow">Seed coverage</span>
             <h2>Marketplace relationships</h2>
@@ -98,23 +96,23 @@
         <div class="candidate-list">
             <div class="candidate-row">
                 <span>Total relationships</span>
-                <strong>@Model.Relationships.TotalRelationships</strong>
+                <strong data-admin-total-relationships>@Model.AdminSeedCoverage.TotalRelationships</strong>
                 <small>@Model.Relationships.Status</small>
             </div>
             <div class="candidate-row">
                 <span>Available</span>
-                <strong>@Model.Relationships.AvailableRelationships</strong>
+                <strong data-admin-available-relationships>@Model.AdminSeedCoverage.AvailableRelationships</strong>
                 <small>Seeded vehicle, owner, fleet, or platform opportunities</small>
             </div>
             <div class="candidate-row">
                 <span>Verified</span>
-                <strong>@Model.Relationships.VerifiedRelationships</strong>
+                <strong data-admin-verified-relationships>@Model.AdminSeedCoverage.VerifiedRelationships</strong>
                 <small>Relationships already carrying verified status</small>
             </div>
             <div class="candidate-row">
                 <span>Relationship types</span>
-                <strong>@Model.Relationships.RelationshipTypes.Count</strong>
-                <small>@(Model.Relationships.RelationshipTypes.Count == 0 ? "No relationship types loaded" : string.Join(", ", Model.Relationships.RelationshipTypes))</small>
+                <strong data-admin-relationship-type-count>@Model.AdminSeedCoverage.RelationshipTypes.Count</strong>
+                <small data-admin-relationship-types>@(Model.AdminSeedCoverage.RelationshipTypes.Count == 0 ? "No relationship types loaded" : string.Join(", ", Model.AdminSeedCoverage.RelationshipTypes))</small>
             </div>
         </div>
     </article>

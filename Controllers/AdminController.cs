@@ -16,17 +16,13 @@ public sealed class AdminController : Controller
     [Authorize(Policy = "AdminWorkspace")]
     public async Task<IActionResult> Index(CancellationToken cancellationToken)
     {
-        var dashboard = await _driverMarketplaceService.GetDashboardAsync(cancellationToken);
-        var moderationQueue = await _driverMarketplaceService.GetModerationQueueAsync(cancellationToken);
-        var relationships = await _driverMarketplaceService.GetRelationshipSummaryAsync(cancellationToken);
+        return View(await _driverMarketplaceService.GetAdminDashboardAsync("All drivers", cancellationToken));
+    }
 
-        return View(new Models.DriverTrustDashboardViewModel
-        {
-            ApiConnected = dashboard.ApiConnected,
-            ApiStatus = dashboard.ApiStatus,
-            Drivers = dashboard.Drivers,
-            ModerationQueue = moderationQueue,
-            Relationships = relationships
-        });
+    [Authorize(Policy = "AdminWorkspace")]
+    [HttpGet]
+    public async Task<IActionResult> Dashboard(string? market, CancellationToken cancellationToken)
+    {
+        return Json(await _driverMarketplaceService.GetAdminDashboardAsync(market, cancellationToken));
     }
 }

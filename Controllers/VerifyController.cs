@@ -20,6 +20,13 @@ public sealed class VerifyController : Controller
         return View(new DriverTrustDashboardViewModel());
     }
 
+    [HttpGet]
+    [Authorize(Policy = "DriverWorkspace")]
+    public async Task<IActionResult> Rules(string? profileType, CancellationToken cancellationToken)
+    {
+        return Json(await _driverMarketplaceService.GetVerificationRulesAsync(profileType, cancellationToken));
+    }
+
     [HttpPost]
     [Authorize(Policy = "DriverWorkspace")]
     public async Task<IActionResult> Create([FromBody] VerificationCaseSubmission request, CancellationToken cancellationToken)

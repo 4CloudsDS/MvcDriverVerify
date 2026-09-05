@@ -30,3 +30,31 @@ public sealed record CounterpartyConfirmationSubmission(
 public sealed record WorkflowSubmissionResult(
     bool Accepted,
     string Message);
+
+public sealed record ProfileUpdateSubmission(
+    int UserId,
+    string Name,
+    decimal Rating,
+    int VehicleId,
+    int PartnerId,
+    int UserTypeId);
+
+public sealed record VehicleUpdateSubmission(
+    int VehicleId,
+    string Registration,
+    string Make,
+    string ModelName,
+    string ModelYear,
+    int PlatformId,
+    int PartnerId);
+
+public sealed record RelationshipUpdateSubmission(
+    string RelationshipId,
+    string VerificationStatus,
+    string AvailabilityStatus);
+
+public sealed record VerificationRulesViewModel(
+    string ProfileType,
+    IReadOnlyList<string> AllowedCaseTypes,
+    IReadOnlyList<string> RequiredEvidenceTypes,
+    string Guidance);

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MvcDriverVerify.Models;
 using MvcDriverVerify.Services;
 
 namespace MvcDriverVerify.Controllers;
@@ -19,6 +20,42 @@ public sealed class MeController : Controller
         var dashboard = await _driverMarketplaceService.GetMeDashboardAsync(cancellationToken);
 
         return View(dashboard);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> UpdateProfile(ProfileUpdateSubmission request, CancellationToken cancellationToken)
+    {
+        var result = await _driverMarketplaceService.UpdateProfileAsync(request, cancellationToken);
+        TempData["MeStatus"] = result.Message;
+
+        return RedirectToAction(nameof(Index));
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> SaveVehicle(VehicleUpdateSubmission request, CancellationToken cancellationToken)
+    {
+        var result = await _driverMarketplaceService.AddOrUpdateVehicleAsync(request, cancellationToken);
+        TempData["MeStatus"] = result.Message;
+
+        return RedirectToAction(nameof(Index));
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> UpdateRelationship(RelationshipUpdateSubmission request, CancellationToken cancellationToken)
+    {
+        var result = await _driverMarketplaceService.UpdateRelationshipAsync(request, cancellationToken);
+        TempData["MeStatus"] = result.Message;
+
+        return RedirectToAction(nameof(Index));
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> DeleteRelationship(string relationshipId, CancellationToken cancellationToken)
+    {
+        var result = await _driverMarketplaceService.DeleteRelationshipAsync(relationshipId, cancellationToken);
+        TempData["MeStatus"] = result.Message;
+
+        return RedirectToAction(nameof(Index));
     }
 
     [HttpPost]

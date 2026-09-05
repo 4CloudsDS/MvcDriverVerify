@@ -11,13 +11,22 @@
 </section>
 
 <section class="verify-workspace" aria-label="Verification case workspace">
-    <form class="verification-case" data-verification-form data-verification-url="@Url.Action("Create", "Verify")">
+    <form class="verification-case" data-verification-form data-verification-url="@Url.Action("Create", "Verify")" data-verification-rules-url="@Url.Action("Rules", "Verify")">
         <article class="verify-card verify-card--primary">
             <div class="section-heading">
                 <span class="eyebrow">Case setup</span>
                 <h2>What are you verifying?</h2>
             </div>
             <div class="case-grid">
+                <label>
+                    Profile type
+                    <select data-profile-type>
+                        <option value="Driver">Driver</option>
+                        <option value="Owner">Owner</option>
+                        <option value="Fleet">Fleet</option>
+                        <option value="Platform">Platform</option>
+                    </select>
+                </label>
                 <label>
                     Case type
                     <select data-case-type>
@@ -42,6 +51,7 @@
                     <input type="text" data-verify-counterparty placeholder="Owner, driver, vehicle, employer, or platform" />
                 </label>
             </div>
+            <p class="verification-status" data-case-guidance>Drivers should verify identity and licence evidence before relationship approval. Owners can focus on vehicle ownership, fleet, or partner claims.</p>
         </article>
 
         <article class="verify-card">
@@ -50,17 +60,17 @@
                 <h2>Support documents</h2>
             </div>
             <div class="evidence-grid">
-                <label class="evidence-card">
+                <label class="evidence-card" data-evidence-card data-evidence-applies="Driver">
                     <span>Driver licence</span>
                     <strong>Licence code, expiry, identity match</strong>
                     <input type="file" accept="image/*,.pdf" data-evidence-input />
                 </label>
-                <label class="evidence-card">
+                <label class="evidence-card" data-evidence-card data-evidence-applies="Driver Owner Fleet">
                     <span>Vehicle proof</span>
                     <strong>Registration, ownership, or hire agreement</strong>
                     <input type="file" accept="image/*,.pdf" data-evidence-input />
                 </label>
-                <label class="evidence-card">
+                <label class="evidence-card" data-evidence-card data-evidence-applies="Driver Owner Fleet Platform">
                     <span>Referral</span>
                     <strong>Former employer, owner, fleet, or platform document</strong>
                     <input type="file" accept="image/*,.pdf" data-evidence-input />

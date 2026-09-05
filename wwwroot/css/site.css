@@ -812,7 +812,8 @@ h3 {
   gap: 0.7rem;
 }
 
-.form-actions button {
+.form-actions button,
+.inline-form button {
   border: 1px solid var(--border);
   border-radius: 999px;
   padding: 0.8rem 1rem;
@@ -820,6 +821,21 @@ h3 {
   color: var(--text);
   cursor: pointer;
   font-weight: 800;
+}
+
+.inline-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.inline-form select {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.65rem 0.8rem;
+  background: var(--surface-strong);
+  color: var(--text);
 }
 
 .form-actions .button-strong {
@@ -841,7 +857,8 @@ h3 {
 
 .me-dashboard {
   display: grid;
-  grid-template-columns: minmax(18rem, 0.8fr) minmax(0, 1.4fr) minmax(18rem, 0.8fr);
+  grid-template-areas: "profile requests" "profile vehicles" "profile relationships";
+  grid-template-columns: minmax(18rem, 0.9fr) minmax(0, 1.35fr);
   gap: clamp(1rem, 2vw, 1.5rem);
   padding: 1rem clamp(1rem, 4vw, 3rem) 2rem;
 }
@@ -859,9 +876,61 @@ h3 {
 }
 
 .me-card--identity {
+  grid-area: profile;
   background:
     linear-gradient(135deg, color-mix(in srgb, var(--brand) 12%, transparent), transparent),
     var(--surface);
+}
+
+.me-card--requests {
+  grid-area: requests;
+}
+
+.me-card--vehicles {
+  grid-area: vehicles;
+}
+
+.me-card--relationships {
+  grid-area: relationships;
+}
+
+.compact-form {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.compact-form label {
+  display: grid;
+  gap: 0.35rem;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.compact-form input,
+.compact-form select {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.85rem;
+  background: var(--surface-strong);
+  color: var(--text);
+}
+
+.compact-form button {
+  width: fit-content;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 0.8rem 1rem;
+  background: var(--brand);
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.form-grid-two {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
 }
 
 .me-profile-summary {
@@ -886,13 +955,40 @@ h3 {
   gap: 1rem;
 }
 
-.request-card {
+.request-card,
+.vehicle-card {
   box-shadow: none;
   background: var(--surface-strong);
 }
 
-.request-card h3 {
+.request-card h3,
+.vehicle-card h3 {
   margin: 0.45rem 0 0;
+}
+
+.vehicle-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.vehicle-card {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.profile-rules {
+  display: grid;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-radius: var(--radius);
+  background: var(--surface-strong);
+}
+
+.profile-rules h3 {
+  margin: 0;
 }
 
 .button-link {
@@ -1142,6 +1238,7 @@ h3 {
   .landing-grid,
   .page-section,
   .match-intent,
+  .form-grid-two,
   .profile-results,
   .verify-workspace,
   .me-dashboard,
@@ -1164,6 +1261,10 @@ h3 {
   .topnav a {
     flex: 1 1 auto;
     text-align: center;
+  }
+
+  .me-dashboard {
+    grid-template-areas: "profile" "requests" "vehicles" "relationships";
   }
 }
 
