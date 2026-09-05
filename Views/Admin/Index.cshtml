@@ -90,4 +90,32 @@
             </div>
         </div>
     </article>
+    <article class="compare-panel">
+        <div class="section-heading">
+            <span class="eyebrow">Seed coverage</span>
+            <h2>Marketplace relationships</h2>
+        </div>
+        <div class="candidate-list">
+            <div class="candidate-row">
+                <span>Total relationships</span>
+                <strong>@Model.Relationships.TotalRelationships</strong>
+                <small>@Model.Relationships.Status</small>
+            </div>
+            <div class="candidate-row">
+                <span>Available</span>
+                <strong>@Model.Relationships.AvailableRelationships</strong>
+                <small>Seeded vehicle, owner, fleet, or platform opportunities</small>
+            </div>
+            <div class="candidate-row">
+                <span>Verified</span>
+                <strong>@Model.Relationships.VerifiedRelationships</strong>
+                <small>Relationships already carrying verified status</small>
+            </div>
+            <div class="candidate-row">
+                <span>Relationship types</span>
+                <strong>@Model.Relationships.RelationshipTypes.Count</strong>
+                <small>@(Model.Relationships.RelationshipTypes.Count == 0 ? "No relationship types loaded" : string.Join(", ", Model.Relationships.RelationshipTypes))</small>
+            </div>
+        </div>
+    </article>
 </section>

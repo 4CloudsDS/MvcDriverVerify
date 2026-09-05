@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MvcDriverVerify.Models;
 using MvcDriverVerify.Services;
@@ -13,12 +14,14 @@ public sealed class VerifyController : Controller
         _driverMarketplaceService = driverMarketplaceService;
     }
 
+    [Authorize(Policy = "DriverWorkspace")]
     public IActionResult Index()
     {
         return View(new DriverTrustDashboardViewModel());
     }
 
     [HttpPost]
+    [Authorize(Policy = "DriverWorkspace")]
     public async Task<IActionResult> Create([FromBody] VerificationCaseSubmission request, CancellationToken cancellationToken)
     {
         var result = await _driverMarketplaceService.CreateVerificationCaseAsync(request, cancellationToken);

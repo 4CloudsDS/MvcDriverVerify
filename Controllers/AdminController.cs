@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MvcDriverVerify.Services;
 
@@ -12,17 +13,20 @@ public sealed class AdminController : Controller
         _driverMarketplaceService = driverMarketplaceService;
     }
 
+    [Authorize(Policy = "AdminWorkspace")]
     public async Task<IActionResult> Index(CancellationToken cancellationToken)
     {
         var dashboard = await _driverMarketplaceService.GetDashboardAsync(cancellationToken);
         var moderationQueue = await _driverMarketplaceService.GetModerationQueueAsync(cancellationToken);
+        var relationships = await _driverMarketplaceService.GetRelationshipSummaryAsync(cancellationToken);
 
         return View(new Models.DriverTrustDashboardViewModel
         {
             ApiConnected = dashboard.ApiConnected,
             ApiStatus = dashboard.ApiStatus,
             Drivers = dashboard.Drivers,
-            ModerationQueue = moderationQueue
+            ModerationQueue = moderationQueue,
+            Relationships = relationships
         });
     }
 }

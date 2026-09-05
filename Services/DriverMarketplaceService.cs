@@ -187,6 +187,98 @@ public sealed class DriverMarketplaceService
         }
     }
 
+    public async Task<RelationshipSummary> GetRelationshipSummaryAsync(CancellationToken cancellationToken)
+    {
+        try
+        {
+            var relationships = await _httpClient.GetFromJsonAsync<List<ApiRelationshipDto>>("api/Relationships", JsonOptions, cancellationToken) ?? [];
+            var types = relationships
+                .Select(item => item.RelationshipType)
+                .Where(item => !string.IsNullOrWhiteSpace(item))
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .OrderBy(item => item)
+                .ToList();
+
+            return new RelationshipSummary
+            {
+                TotalRelationships = relationships.Count,
+                AvailableRelationships = relationships.Count(item => item.AvailabilityStatus.Equals("Available", StringComparison.OrdinalIgnoreCase)),
+                VerifiedRelationships = relationships.Count(item => item.VerificationStatus.Equals("Verified", StringComparison.OrdinalIgnoreCase)),
+                RelationshipTypes = types,
+                Status = "Relationship seed data loaded from VerifyDriverAPI."
+            };
+        }
+        catch (Exception ex) when (ex is HttpRequestException or TaskCanceledException or JsonException)
+        {
+            _logger.LogWarning(ex, "Could not load relationship seed data from VerifyDriverAPI.");
+
+            return new RelationshipSummary
+            {
+                Status = "Relationship seed data unavailable until VerifyDriverAPI is running."
+            };
+        }
+    }
+
+    public async Task<MeDashboardViewModel> GetMeDashboardAsync(CancellationToken cancellationToken)
+    {
+        var dashboard = await GetDashboardAsync(cancellationToken);
+        var relationships = await GetRelationshipSummaryAsync(cancellationToken);
+        var queue = await GetModerationQueueDetailAsync(cancellationToken);
+        var profile = dashboard.Drivers.FirstOrDefault();
+
+        return new MeDashboardViewModel
+        {
+            DisplayName = profile?.Name ?? "Demo user",
+            RoleScope = "Driver / Owner / Counterparty",
+            PublicProfile = profile,
+            Relationships = relationships,
+            RelationshipRequests = queue
+                .Select(item => new RelationshipRequestCard
+                {
+                    CaseId = item.CaseId,
+                    CaseType = item.CaseType,
+                    RelationshipContext = item.RelationshipContext,
+                    PrimaryProfileId = item.PrimaryProfileId,
+                    PrimaryProfileName = profile?.Name ?? $"Profile {item.PrimaryProfileId}",
+                    Counterparty = string.IsNullOrWhiteSpace(item.Counterparty) ? "Counterparty pending" : item.Counterparty,
+                    Status = item.Status,
+                    PrivacyStatus = item.PrivacyStatus,
+                    UpdatedAtUtc = item.UpdatedAtUtc,
+                    ConfirmationClaims = item.Confirmations.Select(confirmation => $"{confirmation.Claim} — {confirmation.State}").ToList()
+                })
+                .ToList(),
+            Status = queue.Count == 0
+                ? "No counterparty approvals are waiting right now."
+                : $"Showing {queue.Count} relationship request{(queue.Count == 1 ? string.Empty : "s")} awaiting action."
+        };
+    }
+
+    public async Task<WorkflowSubmissionResult> UpdateVerificationCaseStatusAsync(
+        Guid caseId,
+        string status,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            using var response = await _httpClient.PatchAsJsonAsync(
+                $"api/VerificationCases/{caseId}/status",
+                new { status },
+                JsonOptions,
+                cancellationToken);
+
+            return new WorkflowSubmissionResult(
+                response.IsSuccessStatusCode,
+                response.IsSuccessStatusCode
+                    ? $"Relationship request marked {status}."
+                    : $"VerifyDriverAPI rejected the relationship update with status {(int)response.StatusCode}.");
+        }
+        catch (Exception ex) when (ex is HttpRequestException or TaskCanceledException)
+        {
+            _logger.LogWarning(ex, "Could not update relationship request {CaseId}.", caseId);
+            return new WorkflowSubmissionResult(false, "Relationship update API unavailable. Retry when VerifyDriverAPI is running.");
+        }
+    }
+
     private static string BuildSearchQuery(string query, string mode, string? intent, string? relationshipType)
     {
         var parameters = new Dictionary<string, string?>
@@ -475,8 +567,48 @@ public sealed class DriverMarketplaceService
     private sealed class ApiModerationQueueDto
     {
         public IReadOnlyList<object> Feedback { get; init; } = [];
-        public IReadOnlyList<object> VerificationCases { get; init; } = [];
+        public IReadOnlyList<ApiVerificationCaseDto> VerificationCases { get; init; } = [];
         public IReadOnlyList<string> DuplicateProfiles { get; init; } = [];
         public IReadOnlyList<string> SuspiciousActivity { get; init; } = [];
+    }
+
+    private async Task<IReadOnlyList<ApiVerificationCaseDto>> GetModerationQueueDetailAsync(CancellationToken cancellationToken)
+    {
+        try
+        {
+            var queue = await _httpClient.GetFromJsonAsync<ApiModerationQueueDto>("api/Moderation/queue", JsonOptions, cancellationToken);
+            return queue?.VerificationCases ?? [];
+        }
+        catch (Exception ex) when (ex is HttpRequestException or TaskCanceledException or JsonException)
+        {
+            _logger.LogWarning(ex, "Could not load counterparty relationship requests from VerifyDriverAPI moderation queue.");
+            return [];
+        }
+    }
+
+    private sealed class ApiVerificationCaseDto
+    {
+        public Guid CaseId { get; init; }
+        public string CaseType { get; init; } = "Relationship verification";
+        public string RelationshipContext { get; init; } = "Relationship";
+        public int PrimaryProfileId { get; init; }
+        public string? Counterparty { get; init; }
+        public string Status { get; init; } = "Draft";
+        public string PrivacyStatus { get; init; } = "PrivateDocuments";
+        public DateTimeOffset UpdatedAtUtc { get; init; }
+        public IReadOnlyList<ApiCounterpartyConfirmationDto> Confirmations { get; init; } = [];
+    }
+
+    private sealed class ApiCounterpartyConfirmationDto
+    {
+        public string Claim { get; init; } = "Relationship confirmation";
+        public string State { get; init; } = "Requested";
+    }
+
+    private sealed class ApiRelationshipDto
+    {
+        public string RelationshipType { get; init; } = string.Empty;
+        public string VerificationStatus { get; init; } = string.Empty;
+        public string AvailabilityStatus { get; init; } = string.Empty;
     }
 }

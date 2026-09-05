@@ -6,6 +6,7 @@ public sealed class DriverTrustDashboardViewModel
     public string ApiStatus { get; init; } = "Using preview trust signals until the API is available.";
     public IReadOnlyList<DriverTrustCard> Drivers { get; init; } = [];
     public ModerationQueueSummary ModerationQueue { get; init; } = new();
+    public RelationshipSummary Relationships { get; init; } = new();
 }
 
 public sealed class ModerationQueueSummary
@@ -15,6 +16,15 @@ public sealed class ModerationQueueSummary
     public int DuplicateProfiles { get; init; }
     public int SuspiciousActivity { get; init; }
     public string Status { get; init; } = "Moderation queue not loaded yet.";
+}
+
+public sealed class RelationshipSummary
+{
+    public int TotalRelationships { get; init; }
+    public int AvailableRelationships { get; init; }
+    public int VerifiedRelationships { get; init; }
+    public IReadOnlyList<string> RelationshipTypes { get; init; } = [];
+    public string Status { get; init; } = "Relationship seed data not loaded yet.";
 }
 
 public sealed class DriverTrustCard

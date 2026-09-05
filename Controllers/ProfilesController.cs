@@ -1,27 +1,17 @@
 using Microsoft.AspNetCore.Mvc;
-using MvcDriverVerify.Services;
 
 namespace MvcDriverVerify.Controllers;
 
 public sealed class ProfilesController : Controller
 {
-    private readonly DriverMarketplaceService _driverMarketplaceService;
-
-    public ProfilesController(DriverMarketplaceService driverMarketplaceService)
-    {
-        _driverMarketplaceService = driverMarketplaceService;
-    }
-
     public IActionResult Index()
     {
-        return View(new Models.DriverTrustDashboardViewModel());
+        return RedirectToAction("Index", "Relationships");
     }
 
     [HttpGet]
-    public async Task<IActionResult> Search(string query, string? mode, string? intent, string? relationshipType, CancellationToken cancellationToken)
+    public IActionResult Search(string query, string? mode, string? intent, string? relationshipType)
     {
-        var dashboard = await _driverMarketplaceService.SearchDashboardAsync(query, mode, intent, relationshipType, cancellationToken);
-
-        return Json(dashboard);
+        return RedirectToAction("Search", "Relationships", new { query, mode, intent, relationshipType });
     }
 }

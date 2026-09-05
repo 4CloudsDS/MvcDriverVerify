@@ -1,0 +1,146 @@
+@model MeDashboardViewModel
+
+@{
+    ViewData["Title"] = "Me";
+}
+
+<section class="page-header me-header">
+    <span class="eyebrow">Personal HUD</span>
+    <h1>Manage your profile, records, and relationship requests.</h1>
+    <p>Review your public trust record, approve or dispute counterparty claims, and keep relationship details current from one workspace.</p>
+</section>
+
+@if (TempData["MeStatus"] is string statusMessage)
+{
+    <section class="page-alert" role="status">@statusMessage</section>
+}
+
+<section class="me-dashboard" aria-label="Personal dashboard">
+    <article class="me-card me-card--identity">
+        <div class="section-heading">
+            <span class="eyebrow">@Model.RoleScope workspace</span>
+            <h2>@Model.DisplayName</h2>
+        </div>
+        @if (Model.PublicProfile is null)
+        {
+            <p>No public trust profile has been linked to this signed-in workspace yet.</p>
+        }
+        else
+        {
+            <div class="me-profile-summary">
+                <div class="feed-card__avatar">@Model.PublicProfile.Initials</div>
+                <div>
+                    <strong>@Model.PublicProfile.Name</strong>
+                    <span>@Model.PublicProfile.Category · @Model.PublicProfile.VehicleRegistration · @Model.PublicProfile.PartnerName</span>
+                </div>
+            </div>
+            <dl class="trust-metrics">
+                <div>
+                    <dt>Trust</dt>
+                    <dd>@Model.PublicProfile.TrustScore</dd>
+                </div>
+                <div>
+                    <dt>Risk</dt>
+                    <dd>@Model.PublicProfile.RiskLevel</dd>
+                </div>
+                <div>
+                    <dt>Reports</dt>
+                    <dd>@Model.PublicProfile.ReportCount</dd>
+                </div>
+            </dl>
+            <p>@Model.PublicProfile.ActivitySummary</p>
+        }
+    </article>
+
+    <article class="me-card">
+        <div class="section-heading">
+            <span class="eyebrow">Relationship requests</span>
+            <h2>Counterparty approvals</h2>
+        </div>
+        <p>@Model.Status</p>
+        <div class="request-list">
+            @if (Model.RelationshipRequests.Count == 0)
+            {
+                <div class="empty-state">
+                    <h3>No pending relationship requests</h3>
+                    <p>Requests created from Verify will appear here for approval, review, or dispute.</p>
+                </div>
+            }
+            @foreach (var request in Model.RelationshipRequests)
+            {
+                <article class="request-card">
+                    <div>
+                        <span class="status-pill">@request.Status</span>
+                        <h3>@request.RelationshipContext</h3>
+                        <p>@request.PrimaryProfileName is requesting confirmation from @request.Counterparty.</p>
+                    </div>
+                    <div class="linked-entities">
+                        <div class="linked-entity">
+                            <span>Case</span>
+                            <strong>@request.CaseType</strong>
+                        </div>
+                        <div class="linked-entity">
+                            <span>Privacy</span>
+                            <strong>@request.PrivacyStatus</strong>
+                        </div>
+                        <div class="linked-entity">
+                            <span>Updated</span>
+                            <strong>@request.UpdatedAtUtc.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</strong>
+                        </div>
+                    </div>
+                    @if (request.ConfirmationClaims.Count > 0)
+                    {
+                        <ul class="check-list">
+                            @foreach (var claim in request.ConfirmationClaims)
+                            {
+                                <li>@claim</li>
+                            }
+                        </ul>
+                    }
+                    <div class="form-actions">
+                        <form asp-controller="Me" asp-action="ApproveRelationship" method="post">
+                            <input type="hidden" name="caseId" value="@request.CaseId" />
+                            <button type="submit" class="button-strong">Approve claim</button>
+                        </form>
+                        <form asp-controller="Me" asp-action="RequestReview" method="post">
+                            <input type="hidden" name="caseId" value="@request.CaseId" />
+                            <button type="submit">Need more evidence</button>
+                        </form>
+                        <form asp-controller="Me" asp-action="DisputeRelationship" method="post">
+                            <input type="hidden" name="caseId" value="@request.CaseId" />
+                            <button type="submit">Dispute</button>
+                        </form>
+                    </div>
+                </article>
+            }
+        </div>
+    </article>
+
+    <aside class="me-card">
+        <div class="section-heading">
+            <span class="eyebrow">Relationships</span>
+            <h2>Active network</h2>
+        </div>
+        <div class="candidate-list">
+            <div class="candidate-row">
+                <span>Total</span>
+                <strong>@Model.Relationships.TotalRelationships</strong>
+                <small>@Model.Relationships.Status</small>
+            </div>
+            <div class="candidate-row">
+                <span>Available</span>
+                <strong>@Model.Relationships.AvailableRelationships</strong>
+                <small>Open employment, hire, fleet, or platform opportunities</small>
+            </div>
+            <div class="candidate-row">
+                <span>Verified</span>
+                <strong>@Model.Relationships.VerifiedRelationships</strong>
+                <small>Relationships with verified status</small>
+            </div>
+        </div>
+        <div class="form-actions">
+            <a class="button-link" asp-controller="Relationships" asp-action="Index">Find relationships</a>
+            <a class="button-link" asp-controller="Verify" asp-action="Index">Start verification</a>
+        </div>
+    </aside>
+</section>

@@ -186,6 +186,25 @@ h3 {
   cursor: pointer;
 }
 
+.role-badge {
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--muted);
+    font-size: 0.78rem;
+    font-weight: 800;
+    padding: 0.45rem 0.75rem;
+}
+
+.page-alert {
+  margin: 1rem clamp(1rem, 4vw, 3rem) 0;
+  padding: 1rem;
+  border: 1px solid color-mix(in srgb, var(--brand) 45%, var(--border));
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--brand) 12%, transparent);
+  color: var(--brand-strong);
+  font-weight: 800;
+}
+
 .hero-panel {
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) minmax(18rem, 0.75fr);
@@ -344,6 +363,10 @@ h3 {
 
 .profile-search-header h1 {
   max-width: 15ch;
+}
+
+.me-header h1 {
+  max-width: 17ch;
 }
 
 .match-intent {
@@ -816,6 +839,72 @@ h3 {
   padding: 1rem clamp(1rem, 4vw, 3rem) 2rem;
 }
 
+.me-dashboard {
+  display: grid;
+  grid-template-columns: minmax(18rem, 0.8fr) minmax(0, 1.4fr) minmax(18rem, 0.8fr);
+  gap: clamp(1rem, 2vw, 1.5rem);
+  padding: 1rem clamp(1rem, 4vw, 3rem) 2rem;
+}
+
+.me-card,
+.request-card {
+  display: grid;
+  gap: 1rem;
+  align-self: start;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.me-card--identity {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--brand) 12%, transparent), transparent),
+    var(--surface);
+}
+
+.me-profile-summary {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+}
+
+.me-profile-summary div:last-child {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.me-profile-summary span,
+.me-card p {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.request-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.request-card {
+  box-shadow: none;
+  background: var(--surface-strong);
+}
+
+.request-card h3 {
+  margin: 0.45rem 0 0;
+}
+
+.button-link {
+  display: inline-flex;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.8rem 1rem;
+  background: var(--surface-strong);
+  color: var(--text);
+  font-weight: 800;
+}
+
 .verification-case,
 .verify-guidance,
 .verify-side-stack {
@@ -1055,6 +1144,7 @@ h3 {
   .match-intent,
   .profile-results,
   .verify-workspace,
+  .me-dashboard,
   .case-grid,
   .evidence-grid,
   .verify-card--split,

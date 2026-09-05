@@ -51,75 +51,75 @@ function setTheme(theme) {
 	if (themeLabel) {
 		themeLabel.textContent = theme === 'dark' ? 'Light' : 'Dark';
 	}
+}
 
-	async function submitFeedbackSignal(context) {
-		const feedbackUrl = signalForm?.dataset.feedbackUrl;
+async function submitFeedbackSignal(context) {
+	const feedbackUrl = signalForm?.dataset.feedbackUrl;
 
-		if (!feedbackUrl) {
-			updateSignalStatus('Feedback submission is not configured yet.', 'warning');
-			return;
-		}
-
-		try {
-			const response = await fetch(feedbackUrl, {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-				body: JSON.stringify({
-					category: signalCategory?.value || 'Public feedback',
-					severity: Number.parseInt(signalSeverity?.value || '1', 10),
-					context,
-					relatedProfileId: Number.parseInt(profilePanel?.dataset.userId || '0', 10) || null,
-					relatedEntity: profileName?.textContent || null,
-					submitterType: 'Public'
-				})
-			});
-			const result = await response.json();
-			updateSignalStatus(result.message || 'Signal submitted to moderation.', response.ok ? 'success' : 'warning');
-		} catch (error) {
-			updateSignalStatus('Feedback API is unavailable. Save the details and retry when VerifyDriverAPI is running.', 'warning');
-			console.warn(error);
-		}
+	if (!feedbackUrl) {
+		updateSignalStatus('Feedback submission is not configured yet.', 'warning');
+		return;
 	}
 
-	async function submitVerificationCase(profileId, selectedEvidenceCount, checkedCount) {
-		const verificationUrl = verificationForm?.dataset.verificationUrl;
+	try {
+		const response = await fetch(feedbackUrl, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+			body: JSON.stringify({
+				category: signalCategory?.value || 'Public feedback',
+				severity: Number.parseInt(signalSeverity?.value || '1', 10),
+				context,
+				relatedProfileId: Number.parseInt(profilePanel?.dataset.userId || '0', 10) || null,
+				relatedEntity: profileName?.textContent || null,
+				submitterType: 'Public'
+			})
+		});
+		const result = await response.json();
+		updateSignalStatus(result.message || 'Signal submitted to moderation.', response.ok ? 'success' : 'warning');
+	} catch (error) {
+		updateSignalStatus('Feedback API is unavailable. Save the details and retry when VerifyDriverAPI is running.', 'warning');
+		console.warn(error);
+	}
+}
 
-		if (!verificationUrl || !verificationStatus) {
-			return;
-		}
+async function submitVerificationCase(profileId, selectedEvidenceCount, checkedCount) {
+	const verificationUrl = verificationForm?.dataset.verificationUrl;
 
-		verificationStatus.textContent = 'Submitting verification case to VerifyDriverAPI...';
+	if (!verificationUrl || !verificationStatus) {
+		return;
+	}
 
-		try {
-			const response = await fetch(verificationUrl, {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-				body: JSON.stringify({
-					caseType: caseType?.value || 'Relationship verification',
-					relationshipContext: verifyContext?.value || 'Relationship verification',
-					primaryProfileId: profileId,
-					counterparty: verifyCounterparty?.value || null,
-					evidence: Array.from(evidenceInputs).flatMap((input) => Array.from(input.files || []).map((file) => ({
-						documentType: input.closest('.evidence-card')?.querySelector('span')?.textContent || 'Evidence',
-						fileName: file.name,
-						contentType: file.type || null,
-						sizeBytes: file.size
-					}))),
-					confirmations: Array.from(verificationChecks).map((item) => ({
-						counterparty: verifyCounterparty?.value || 'Counterparty',
-						claim: item.parentElement?.textContent?.trim() || 'Relationship confirmation',
-						state: item.checked ? 'Confirmed' : 'Requested'
-					}))
-				})
-			});
-			const result = await response.json();
-			verificationStatus.textContent = result.message || (response.ok
-				? `Verification case created with ${selectedEvidenceCount} document${selectedEvidenceCount === 1 ? '' : 's'} and ${checkedCount} confirmation check${checkedCount === 1 ? '' : 's'}.`
-				: 'Verification case could not be created.');
-		} catch (error) {
-			verificationStatus.textContent = 'Verification case API is unavailable. Keep the evidence packet and retry when VerifyDriverAPI is running.';
-			console.warn(error);
-		}
+	verificationStatus.textContent = 'Submitting verification case to VerifyDriverAPI...';
+
+	try {
+		const response = await fetch(verificationUrl, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+			body: JSON.stringify({
+				caseType: caseType?.value || 'Relationship verification',
+				relationshipContext: verifyContext?.value || 'Relationship verification',
+				primaryProfileId: profileId,
+				counterparty: verifyCounterparty?.value || null,
+				evidence: Array.from(evidenceInputs).flatMap((input) => Array.from(input.files || []).map((file) => ({
+					documentType: input.closest('.evidence-card')?.querySelector('span')?.textContent || 'Evidence',
+					fileName: file.name,
+					contentType: file.type || null,
+					sizeBytes: file.size
+				}))),
+				confirmations: Array.from(verificationChecks).map((item) => ({
+					counterparty: verifyCounterparty?.value || 'Counterparty',
+					claim: item.parentElement?.textContent?.trim() || 'Relationship confirmation',
+					state: item.checked ? 'Confirmed' : 'Requested'
+				}))
+			})
+		});
+		const result = await response.json();
+		verificationStatus.textContent = result.message || (response.ok
+			? `Verification case created with ${selectedEvidenceCount} document${selectedEvidenceCount === 1 ? '' : 's'} and ${checkedCount} confirmation check${checkedCount === 1 ? '' : 's'}.`
+			: 'Verification case could not be created.');
+	} catch (error) {
+		verificationStatus.textContent = 'Verification case API is unavailable. Keep the evidence packet and retry when VerifyDriverAPI is running.';
+		console.warn(error);
 	}
 }
 
@@ -141,7 +141,7 @@ searchForm?.addEventListener('submit', (event) => {
 
 	if (!query) {
 		searchStatus.textContent = searchMode === 'profiles'
-			? 'Enter a person, driver, owner, vehicle, fleet, or platform to search profiles.'
+			? 'Enter a person, driver, owner, vehicle, fleet, or platform to search relationships.'
 			: searchMode === 'opportunity'
 				? 'Enter a vehicle, platform, fleet, licence type, location, or role to search opportunities.'
 			: 'Enter a driver name, registration, platform, or city to start verification.';
@@ -154,7 +154,7 @@ searchForm?.addEventListener('submit', (event) => {
 	}
 
 	searchStatus.textContent = searchMode === 'profile'
-		? `Searching known profiles for "${query}"...`
+		? `Searching known relationship records for "${query}"...`
 		: searchMode === 'opportunity'
 			? `Searching opportunities for "${query}"...`
 		: `Checking trust signals for "${query}"...`;
@@ -177,7 +177,7 @@ searchModeTabs.forEach((tab) => {
 		}
 
 		if (profileSearchLabel) {
-			profileSearchLabel.textContent = mode === 'opportunity' ? 'Find an employment or partnership opportunity' : 'Find a specific profile';
+			profileSearchLabel.textContent = mode === 'opportunity' ? 'Find an employment or partnership opportunity' : 'Find a specific person or relationship record';
 		}
 
 		if (searchInput) {
@@ -190,7 +190,7 @@ searchModeTabs.forEach((tab) => {
 		if (searchStatus) {
 			searchStatus.textContent = mode === 'opportunity'
 				? 'Choose your intent, then search for vehicles, owners, platforms, fleets, licences, or driver roles.'
-				: 'Search for a known person/profile by name or vehicle registration.';
+				: 'Search for a known person or relationship by name or vehicle registration.';
 		}
 	});
 });
@@ -394,7 +394,7 @@ verificationForm?.addEventListener('submit', (event) => {
 	}
 
 	if (!profileId) {
-		verificationStatus.textContent = 'Start from a Profiles result before API submission so the case has a linked profile id.';
+		verificationStatus.textContent = 'Start from a Relationships result before API submission so the case has a linked profile id.';
 		return;
 	}
 
