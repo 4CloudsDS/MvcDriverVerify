@@ -1,23 +1,23 @@
 @model DriverTrustDashboardViewModel
 
 @{
-    ViewData["Title"] = "Profiles";
+    ViewData["Title"] = "Relationships";
 }
 
 <section class="page-header profile-search-header">
     <span class="eyebrow">Relationship search</span>
     <h1>Find the right driver, owner, vehicle, or fleet partner.</h1>
-    <p>Search trusted profiles before starting a hire, vehicle rental, fleet contract, delivery route, or platform partnership.</p>
+    <p>Search trusted relationships before starting a hire, vehicle rental, fleet contract, delivery route, or platform partnership.</p>
 </section>
 
-<section class="profiles-search-window" aria-label="Profile search">
-    <div class="search-mode-tabs" role="tablist" aria-label="Profile search mode">
+<section class="profiles-search-window" aria-label="Relationship search">
+    <div class="search-mode-tabs" role="tablist" aria-label="Relationship search mode">
         <button type="button" class="search-mode-tab is-active" data-search-mode-tab="profile">Known profile</button>
         <button type="button" class="search-mode-tab" data-search-mode-tab="opportunity">Opportunity</button>
     </div>
 
-    <form class="search-card profile-search-card" role="search" data-verify-url="@Url.Action("Search", "Profiles")" data-search-mode="profile">
-        <label for="profile-search" data-profile-search-label>Find a specific profile</label>
+    <form class="search-card profile-search-card" role="search" data-verify-url="@Url.Action("Search", "Relationships")" data-search-mode="profile">
+        <label for="profile-search" data-profile-search-label>Find a specific person or relationship record</label>
         <div class="search-card__row">
             <input id="profile-search" type="search" placeholder="Search: James Patrick or WWW 118 LM" data-profile-search-input />
             <button type="submit">Search</button>
@@ -29,7 +29,7 @@
                     <option value="looking-for-driver">Looking for a driver</option>
                     <option value="driver-looking-for-owner">A driver looking for an owner</option>
                     <option value="fleet-owner-looking-for-partners">A fleet owner looking for partners</option>
-                    <option value="platform-vetting-profiles">A platform vetting profiles</option>
+                    <option value="platform-vetting-profiles">A platform vetting relationships</option>
                 </select>
             </label>
             <label>
@@ -43,13 +43,13 @@
         <p class="search-card__status" data-search-status>Search for a known person/profile by name or vehicle registration.</p>
     </form>
 
-    <section class="profiles-results" aria-label="Profile search results">
+    <section class="profiles-results" aria-label="Relationship search results">
         <div class="section-heading">
             <span class="eyebrow">Potential matches</span>
-            <h2>Profiles</h2>
+            <h2>Relationship records</h2>
         </div>
         <div class="empty-state" data-feed-empty>
-            <h3>No profile search yet</h3>
+            <h3>No relationship search yet</h3>
             <p>Matches will appear here after you search for a driver, owner, vehicle, fleet, platform, or capability.</p>
         </div>
         <div class="feed-results profile-results" data-feed-results data-results-mode="profiles"></div>

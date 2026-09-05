@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MvcDriverVerify.Services;
 
@@ -12,10 +13,16 @@ public sealed class AdminController : Controller
         _driverMarketplaceService = driverMarketplaceService;
     }
 
+    [Authorize(Policy = "AdminWorkspace")]
     public async Task<IActionResult> Index(CancellationToken cancellationToken)
     {
-        var dashboard = await _driverMarketplaceService.GetDashboardAsync(cancellationToken);
+        return View(await _driverMarketplaceService.GetAdminDashboardAsync("All drivers", cancellationToken));
+    }
 
-        return View(dashboard);
+    [Authorize(Policy = "AdminWorkspace")]
+    [HttpGet]
+    public async Task<IActionResult> Dashboard(string? market, CancellationToken cancellationToken)
+    {
+        return Json(await _driverMarketplaceService.GetAdminDashboardAsync(market, cancellationToken));
     }
 }

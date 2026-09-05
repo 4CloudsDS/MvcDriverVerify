@@ -1,0 +1,304 @@
+@model MeDashboardViewModel
+
+@{
+    ViewData["Title"] = "Me";
+}
+
+<section class="page-header me-header">
+    <span class="eyebrow">Personal HUD</span>
+    <h1>Manage your profile, records, and relationship requests.</h1>
+    <p>Review your public trust record, approve or dispute counterparty claims, and keep relationship details current from one workspace.</p>
+</section>
+
+@if (TempData["MeStatus"] is string statusMessage)
+{
+    <section class="page-alert" role="status">@statusMessage</section>
+}
+
+<section class="me-dashboard" aria-label="Personal dashboard">
+    <article class="me-card me-card--identity">
+        <div class="section-heading">
+            <span class="eyebrow">My profile</span>
+            <h2>@Model.DisplayName</h2>
+        </div>
+        <form class="compact-form" asp-controller="Me" asp-action="UpdateProfile" method="post">
+            <input type="hidden" name="UserId" value="@Model.ProfileEditor.UserId" />
+            <input type="hidden" name="VehicleId" value="@Model.ProfileEditor.VehicleId" />
+            <input type="hidden" name="PartnerId" value="@Model.ProfileEditor.PartnerId" />
+            <input type="hidden" name="UserTypeId" value="@Model.ProfileEditor.UserTypeId" />
+            <label>
+                Display name
+                <input name="Name" value="@Model.ProfileEditor.Name" />
+            </label>
+            <label>
+                Trust rating
+                <input name="Rating" type="number" min="0" max="5" step="0.1" value="@Model.ProfileEditor.Rating" />
+            </label>
+            <button type="submit" class="button-strong">Update profile</button>
+        </form>
+        @if (Model.PublicProfile is null)
+        {
+            <p>No public trust profile has been linked to this signed-in workspace yet.</p>
+        }
+        else
+        {
+            <div class="me-profile-summary">
+                <div class="feed-card__avatar">@Model.PublicProfile.Initials</div>
+                <div>
+                    <strong>@Model.PublicProfile.Name</strong>
+                    <span>@Model.PublicProfile.Category · @Model.PublicProfile.VehicleRegistration · @Model.PublicProfile.PartnerName</span>
+                </div>
+            </div>
+            <dl class="trust-metrics">
+                <div>
+                    <dt>Trust</dt>
+                    <dd>@Model.PublicProfile.TrustScore</dd>
+                </div>
+                <div>
+                    <dt>Risk</dt>
+                    <dd>@Model.PublicProfile.RiskLevel</dd>
+                </div>
+                <div>
+                    <dt>Reports</dt>
+                    <dd>@Model.PublicProfile.ReportCount</dd>
+                </div>
+            </dl>
+            <p>@Model.PublicProfile.ActivitySummary</p>
+        }
+        <div class="profile-rules">
+            <h3>Owner and driver rules</h3>
+            <ul class="check-list">
+                <li>Vehicles added here are treated as owned by this profile.</li>
+                <li>Owners can register multiple vehicles and maintain multiple driver/partner relationships.</li>
+                <li>A driver can only carry one active owner relationship.</li>
+                <li>Driver links should be created after the counterparty claim is approved.</li>
+            </ul>
+        </div>
+    </article>
+
+    <article class="me-card me-card--requests">
+        <div class="section-heading">
+            <span class="eyebrow">Relationship requests</span>
+            <h2>Counterparty approvals</h2>
+        </div>
+        <p>@Model.Status</p>
+        <div class="request-list">
+            @if (Model.RelationshipRequests.Count == 0)
+            {
+                <div class="empty-state">
+                    <h3>No pending relationship requests</h3>
+                    <p>Requests created from Verify will appear here for approval, review, or dispute.</p>
+                </div>
+            }
+            @foreach (var request in Model.RelationshipRequests)
+            {
+                <article class="request-card">
+                    <div>
+                        <span class="status-pill">@request.Status</span>
+                        <h3>@request.RelationshipContext</h3>
+                        <p>@request.PrimaryProfileName is requesting confirmation from @request.Counterparty.</p>
+                    </div>
+                    <div class="linked-entities">
+                        <div class="linked-entity">
+                            <span>Case</span>
+                            <strong>@request.CaseType</strong>
+                        </div>
+                        <div class="linked-entity">
+                            <span>Privacy</span>
+                            <strong>@request.PrivacyStatus</strong>
+                        </div>
+                        <div class="linked-entity">
+                            <span>Updated</span>
+                            <strong>@request.UpdatedAtUtc.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</strong>
+                        </div>
+                    </div>
+                    @if (request.ConfirmationClaims.Count > 0)
+                    {
+                        <ul class="check-list">
+                            @foreach (var claim in request.ConfirmationClaims)
+                            {
+                                <li>@claim</li>
+                            }
+                        </ul>
+                    }
+                    <div class="form-actions">
+                        <form asp-controller="Me" asp-action="ApproveRelationship" method="post">
+                            <input type="hidden" name="caseId" value="@request.CaseId" />
+                            <button type="submit" class="button-strong">Approve claim</button>
+                        </form>
+                        <form asp-controller="Me" asp-action="RequestReview" method="post">
+                            <input type="hidden" name="caseId" value="@request.CaseId" />
+                            <button type="submit">Need more evidence</button>
+                        </form>
+                        <form asp-controller="Me" asp-action="DisputeRelationship" method="post">
+                            <input type="hidden" name="caseId" value="@request.CaseId" />
+                            <button type="submit">Dispute</button>
+                        </form>
+                    </div>
+                </article>
+            }
+        </div>
+    </article>
+
+    <article class="me-card me-card--vehicles">
+        <div class="section-heading">
+            <span class="eyebrow">Vehicles</span>
+            <h2>Owned vehicle records</h2>
+        </div>
+        <div class="vehicle-list">
+            @if (Model.Vehicles.Count == 0)
+            {
+                <div class="empty-state">
+                    <h3>No vehicles linked yet</h3>
+                    <p>Add a vehicle and this workspace will treat the signed-in profile as the owner.</p>
+                </div>
+            }
+            @foreach (var vehicle in Model.Vehicles)
+            {
+                <article class="vehicle-card">
+                    <div>
+                        <span class="status-pill">Owner linked</span>
+                        <h3>@vehicle.Registration</h3>
+                        <p>@vehicle.Description</p>
+                    </div>
+                    <div class="linked-entities">
+                        <div class="linked-entity">
+                            <span>Platform</span>
+                            <strong>@vehicle.Platform</strong>
+                        </div>
+                        <div class="linked-entity">
+                            <span>Partner</span>
+                            <strong>@vehicle.Partner</strong>
+                        </div>
+                    </div>
+                    <p>@vehicle.DriverLinkStatus</p>
+                    <details class="vehicle-edit">
+                        <summary>Update vehicle</summary>
+                        <form class="compact-form" asp-controller="Me" asp-action="SaveVehicle" method="post">
+                            <input type="hidden" name="VehicleId" value="@vehicle.VehicleId" />
+                            <label>
+                                Registration
+                                <input name="Registration" value="@vehicle.Registration" placeholder="GP42MX" />
+                            </label>
+                            <div class="form-grid-two">
+                                <label>
+                                    Make
+                                    <input name="Make" value="@vehicle.Make" placeholder="Toyota" />
+                                </label>
+                                <label>
+                                    Model
+                                    <input name="ModelName" value="@vehicle.ModelName" placeholder="Corolla Quest" />
+                                </label>
+                            </div>
+                            <div class="form-grid-two">
+                                <label>
+                                    Year
+                                    <input name="ModelYear" value="@vehicle.ModelYear" maxlength="4" placeholder="2026" />
+                                </label>
+                                <label>
+                                    Platform
+                                    <select name="PlatformId">
+                                        <option value="1" selected="@(vehicle.PlatformId == 1)">Rideshare</option>
+                                        <option value="2" selected="@(vehicle.PlatformId == 2)">Delivery</option>
+                                        <option value="3" selected="@(vehicle.PlatformId == 3)">Trucking</option>
+                                        <option value="4" selected="@(vehicle.PlatformId == 4)">Fleet</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <input type="hidden" name="PartnerId" value="@(vehicle.PartnerId == 0 ? Model.ProfileEditor.PartnerId : vehicle.PartnerId)" />
+                            <button type="submit">Update vehicle</button>
+                        </form>
+                    </details>
+                </article>
+            }
+        </div>
+        <form class="compact-form" asp-controller="Me" asp-action="SaveVehicle" method="post">
+            <input type="hidden" name="VehicleId" value="0" />
+            <label>
+                New vehicle registration
+                <input name="Registration" placeholder="GP42MX" />
+            </label>
+            <div class="form-grid-two">
+                <label>
+                    Make
+                    <input name="Make" placeholder="Toyota" />
+                </label>
+                <label>
+                    Model
+                    <input name="ModelName" placeholder="Corolla Quest" />
+                </label>
+            </div>
+            <div class="form-grid-two">
+                <label>
+                    Year
+                    <input name="ModelYear" maxlength="4" placeholder="2026" />
+                </label>
+                <label>
+                    Platform
+                    <select name="PlatformId">
+                        <option value="1">Rideshare</option>
+                        <option value="2">Delivery</option>
+                        <option value="3">Trucking</option>
+                        <option value="4">Fleet</option>
+                    </select>
+                </label>
+            </div>
+            <input type="hidden" name="PartnerId" value="@(Model.ProfileEditor.PartnerId == 0 ? 10 : Model.ProfileEditor.PartnerId)" />
+            <button type="submit" class="button-strong">Add vehicle</button>
+        </form>
+    </article>
+
+    <aside class="me-card me-card--relationships">
+        <div class="section-heading">
+            <span class="eyebrow">Relationships</span>
+            <h2>Current relationships</h2>
+        </div>
+        <div class="form-actions">
+            <a class="button-strong" asp-controller="Relationships" asp-action="Index">Add relationship</a>
+        </div>
+        <div class="candidate-list">
+            @foreach (var relationship in Model.Relationships.CurrentUserRelationships)
+            {
+                <div class="candidate-row">
+                    <span>@relationship.RelationshipType</span>
+                    <strong>@relationship.VerificationStatus</strong>
+                    <small>Participant and vehicle labels are pending from VerifyDriverAPI.</small>
+                    <form asp-controller="Me" asp-action="UpdateRelationship" method="post" class="inline-form">
+                        <input type="hidden" name="RelationshipId" value="@relationship.RelationshipId" />
+                        <input type="hidden" name="VerificationStatus" value="@relationship.VerificationStatus" />
+                        <select name="AvailabilityStatus">
+                            <option selected="@(relationship.AvailabilityStatus == "Available")">Available</option>
+                            <option selected="@(relationship.AvailabilityStatus == "Active")">Active</option>
+                            <option selected="@(relationship.AvailabilityStatus == "Paused")">Paused</option>
+                            <option selected="@(relationship.AvailabilityStatus == "Closed")">Closed</option>
+                        </select>
+                        <button type="submit">Update</button>
+                    </form>
+                    <form asp-controller="Me" asp-action="DeleteRelationship" method="post" class="inline-form">
+                        <input type="hidden" name="relationshipId" value="@relationship.RelationshipId" />
+                        <button type="submit">Delete</button>
+                    </form>
+                </div>
+            }
+            <div class="candidate-row">
+                <span>Total</span>
+                <strong>@Model.Relationships.TotalRelationships</strong>
+                <small>@Model.Relationships.Status</small>
+            </div>
+            <div class="candidate-row">
+                <span>Available</span>
+                <strong>@Model.Relationships.AvailableRelationships</strong>
+                <small>Open employment, hire, fleet, or platform opportunities</small>
+            </div>
+            <div class="candidate-row">
+                <span>Verified</span>
+                <strong>@Model.Relationships.VerifiedRelationships</strong>
+                <small>Relationships with verified status</small>
+            </div>
+        </div>
+        <div class="form-actions">
+            <a class="button-link" asp-controller="Relationships" asp-action="Index">Find relationships</a>
+            <a class="button-link" asp-controller="Verify" asp-action="Index">Start verification</a>
+        </div>
+    </aside>
+</section>

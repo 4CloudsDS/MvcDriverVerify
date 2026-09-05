@@ -27,6 +27,14 @@ namespace MvcDriverVerify.Controllers
             return Json(dashboard);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> SubmitFeedback([FromBody] FeedbackSignalSubmission request, CancellationToken cancellationToken)
+        {
+            var result = await _driverMarketplaceService.SubmitFeedbackAsync(request, cancellationToken);
+
+            return result.Accepted ? Accepted(result) : StatusCode(StatusCodes.Status503ServiceUnavailable, result);
+        }
+
         public IActionResult Privacy()
         {
             return View();

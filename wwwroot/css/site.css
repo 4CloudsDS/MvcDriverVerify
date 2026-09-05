@@ -65,6 +65,42 @@ textarea {
   font: inherit;
 }
 
+button,
+input,
+select,
+textarea,
+a {
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+main:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent) 72%, #ffffff);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
+  transform: translateY(-150%);
+  border-radius: 999px;
+  padding: 0.7rem 1rem;
+  background: var(--text);
+  color: var(--bg);
+  font-weight: 800;
+  box-shadow: var(--shadow);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
 .app-shell__topbar {
   position: sticky;
   top: 0;
@@ -148,6 +184,25 @@ h3 {
 .theme-toggle {
   background: var(--surface-strong);
   cursor: pointer;
+}
+
+.role-badge {
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--muted);
+    font-size: 0.78rem;
+    font-weight: 800;
+    padding: 0.45rem 0.75rem;
+}
+
+.page-alert {
+  margin: 1rem clamp(1rem, 4vw, 3rem) 0;
+  padding: 1rem;
+  border: 1px solid color-mix(in srgb, var(--brand) 45%, var(--border));
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--brand) 12%, transparent);
+  color: var(--brand-strong);
+  font-weight: 800;
 }
 
 .hero-panel {
@@ -265,6 +320,14 @@ h3 {
   font-weight: 800;
 }
 
+.search-card button:hover,
+.profile-match-card__action:hover,
+.form-actions button:hover,
+.verify-submit:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.16);
+}
+
 .profiles-search-window {
   display: grid;
   gap: 1rem;
@@ -300,6 +363,10 @@ h3 {
 
 .profile-search-header h1 {
   max-width: 15ch;
+}
+
+.me-header h1 {
+  max-width: 17ch;
 }
 
 .match-intent {
@@ -508,6 +575,13 @@ h3 {
   box-shadow: var(--shadow);
 }
 
+.profile-match-card:hover,
+.evidence-card:hover,
+.role-card:hover {
+  border-color: color-mix(in srgb, var(--brand) 42%, var(--border));
+  transform: translateY(-2px);
+}
+
 .profile-match-card__top {
   display: flex;
   gap: 0.8rem;
@@ -559,6 +633,12 @@ h3 {
   border-radius: var(--radius);
   background: var(--surface);
   color: var(--muted);
+}
+
+.empty-state,
+.verification-status,
+.search-card__status {
+  overflow-wrap: anywhere;
 }
 
 .empty-state h3 {
@@ -712,13 +792,28 @@ h3 {
   accent-color: var(--brand);
 }
 
+.form-status {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.form-status.is-success {
+  color: var(--success);
+}
+
+.form-status.is-warning {
+  color: var(--accent);
+}
+
 .form-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.7rem;
 }
 
-.form-actions button {
+.form-actions button,
+.inline-form button {
   border: 1px solid var(--border);
   border-radius: 999px;
   padding: 0.8rem 1rem;
@@ -726,6 +821,21 @@ h3 {
   color: var(--text);
   cursor: pointer;
   font-weight: 800;
+}
+
+.inline-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.inline-form select {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.65rem 0.8rem;
+  background: var(--surface-strong);
+  color: var(--text);
 }
 
 .form-actions .button-strong {
@@ -743,6 +853,152 @@ h3 {
   grid-template-columns: minmax(0, 1.35fr) minmax(18rem, 0.65fr);
   gap: clamp(1rem, 2vw, 1.5rem);
   padding: 1rem clamp(1rem, 4vw, 3rem) 2rem;
+}
+
+.me-dashboard {
+  display: grid;
+  grid-template-areas: "profile requests" "profile vehicles" "profile relationships";
+  grid-template-columns: minmax(18rem, 0.9fr) minmax(0, 1.35fr);
+  gap: clamp(1rem, 2vw, 1.5rem);
+  padding: 1rem clamp(1rem, 4vw, 3rem) 2rem;
+}
+
+.me-card,
+.request-card {
+  display: grid;
+  gap: 1rem;
+  align-self: start;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.me-card--identity {
+  grid-area: profile;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--brand) 12%, transparent), transparent),
+    var(--surface);
+}
+
+.me-card--requests {
+  grid-area: requests;
+}
+
+.me-card--vehicles {
+  grid-area: vehicles;
+}
+
+.me-card--relationships {
+  grid-area: relationships;
+}
+
+.compact-form {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.compact-form label {
+  display: grid;
+  gap: 0.35rem;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.compact-form input,
+.compact-form select {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.85rem;
+  background: var(--surface-strong);
+  color: var(--text);
+}
+
+.compact-form button {
+  width: fit-content;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 0.8rem 1rem;
+  background: var(--brand);
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.form-grid-two {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.me-profile-summary {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+}
+
+.me-profile-summary div:last-child {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.me-profile-summary span,
+.me-card p {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.request-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.request-card,
+.vehicle-card {
+  box-shadow: none;
+  background: var(--surface-strong);
+}
+
+.request-card h3,
+.vehicle-card h3 {
+  margin: 0.45rem 0 0;
+}
+
+.vehicle-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.vehicle-card {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.profile-rules {
+  display: grid;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-radius: var(--radius);
+  background: var(--surface-strong);
+}
+
+.profile-rules h3 {
+  margin: 0;
+}
+
+.button-link {
+  display: inline-flex;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.8rem 1rem;
+  background: var(--surface-strong);
+  color: var(--text);
+  font-weight: 800;
 }
 
 .verification-case,
@@ -982,8 +1238,10 @@ h3 {
   .landing-grid,
   .page-section,
   .match-intent,
+  .form-grid-two,
   .profile-results,
   .verify-workspace,
+  .me-dashboard,
   .case-grid,
   .evidence-grid,
   .verify-card--split,
@@ -1003,6 +1261,10 @@ h3 {
   .topnav a {
     flex: 1 1 auto;
     text-align: center;
+  }
+
+  .me-dashboard {
+    grid-template-areas: "profile" "requests" "vehicles" "relationships";
   }
 }
 
@@ -1028,5 +1290,26 @@ h3 {
 
   .search-card button {
     min-height: 3rem;
+  }
+
+  .hero-panel__copy h1,
+  .page-header h1 {
+    max-width: 100%;
+    font-size: clamp(2.3rem, 15vw, 4rem);
+  }
+
+  .trust-metrics,
+  .profile-match-card__score,
+  .candidate-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
   }
 }

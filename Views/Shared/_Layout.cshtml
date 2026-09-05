@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
     <header class="app-shell__topbar">
         <a class="brand" asp-controller="Home" asp-action="Index" aria-label="Verify Driver home">
             <span class="brand__mark">VD</span>
@@ -17,16 +18,32 @@
         </a>
         <nav class="topnav" aria-label="Primary navigation">
             <a asp-controller="Home" asp-action="Index">Home</a>
-            <a asp-controller="Verify" asp-action="Index">Verify</a>
-            <a asp-controller="Profiles" asp-action="Index">Profiles</a>
-            <a asp-controller="Admin" asp-action="Index">Admin</a>
+            @if (User.IsInRole("Driver") || User.IsInRole("Owner") || User.IsInRole("Fleet") || User.IsInRole("Platform") || User.IsInRole("Moderator") || User.IsInRole("Admin"))
+            {
+                <a asp-controller="Me" asp-action="Index">Me</a>
+            }
+            @if (User.IsInRole("Owner") || User.IsInRole("Fleet") || User.IsInRole("Platform") || User.IsInRole("Moderator") || User.IsInRole("Admin"))
+            {
+                <a asp-controller="Relationships" asp-action="Index">Relationships</a>
+            }
+            @if (User.IsInRole("Driver") || User.IsInRole("Owner") || User.IsInRole("Fleet") || User.IsInRole("Platform") || User.IsInRole("Moderator") || User.IsInRole("Admin"))
+            {
+                <a asp-controller="Verify" asp-action="Index">Verify</a>
+            }
+            @if (User.IsInRole("Moderator") || User.IsInRole("Admin"))
+            {
+                <a asp-controller="Admin" asp-action="Index">Admin</a>
+            }
         </nav>
+        <span class="role-badge" aria-label="Current role scope">
+            @(User.IsInRole("Admin") ? "Admin" : User.IsInRole("Moderator") ? "Moderator" : User.IsInRole("Owner") || User.IsInRole("Fleet") ? "Owner/Fleet" : User.IsInRole("Driver") ? "Driver" : "Public")
+        </span>
         <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle dark and light theme">
             <span data-theme-label>Dark</span>
         </button>
     </header>
 
-    <main>
+    <main id="main-content" tabindex="-1">
         @RenderBody()
     </main>
 

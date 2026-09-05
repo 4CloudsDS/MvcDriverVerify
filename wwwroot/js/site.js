@@ -13,8 +13,13 @@ const verificationStatus = document.querySelector('[data-verification-status]');
 const evidenceStatus = document.querySelector('[data-evidence-status]');
 const evidenceInputs = document.querySelectorAll('[data-evidence-input]');
 const verificationChecks = document.querySelectorAll('[data-verify-check]');
+const profileType = document.querySelector('[data-profile-type]');
+const caseGuidance = document.querySelector('[data-case-guidance]');
+const evidenceCards = document.querySelectorAll('[data-evidence-card]');
 const verifyProfile = document.querySelector('[data-verify-profile]');
 const verifyContext = document.querySelector('[data-verify-context]');
+const verifyCounterparty = document.querySelector('[data-verify-counterparty]');
+const caseType = document.querySelector('[data-case-type]');
 const trustCueScore = document.querySelector('[data-trust-cue-score]');
 const trustCueName = document.querySelector('[data-trust-cue-name]');
 const trustCueSummary = document.querySelector('[data-trust-cue-summary]');
@@ -23,6 +28,7 @@ const trustCueLinks = document.querySelector('[data-trust-cue-links]');
 const profileComparison = document.querySelector('[data-profile-comparison]');
 const comparisonResults = document.querySelector('[data-comparison-results]');
 const filterChips = document.querySelectorAll('[data-filter-chip]');
+const adminDashboard = document.querySelector('[data-admin-dashboard-url]');
 const profilePanel = document.querySelector('[data-profile-panel]');
 const profileStatus = document.querySelector('[data-profile-status]');
 const profileName = document.querySelector('[data-profile-name]');
@@ -33,6 +39,12 @@ const profileRisk = document.querySelector('[data-profile-risk]');
 const profileLinks = document.querySelector('[data-profile-links]');
 const feedEmpty = document.querySelector('[data-feed-empty]');
 const feedResults = document.querySelector('[data-feed-results]');
+const signalForm = document.querySelector('[data-signal-form]');
+const signalCategory = document.querySelector('[data-signal-category]');
+const signalSeverity = document.querySelector('[data-signal-severity]');
+const signalContext = document.querySelector('[data-signal-context]');
+const signalStatus = document.querySelector('[data-signal-status]');
+const signalDraft = document.querySelector('[data-signal-draft]');
 const storedTheme = localStorage.getItem('verify-driver-theme');
 const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
@@ -45,9 +57,80 @@ function setTheme(theme) {
 	}
 }
 
+async function submitFeedbackSignal(context) {
+	const feedbackUrl = signalForm?.dataset.feedbackUrl;
+
+	if (!feedbackUrl) {
+		updateSignalStatus('Feedback submission is not configured yet.', 'warning');
+		return;
+	}
+
+	try {
+		const response = await fetch(feedbackUrl, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+			body: JSON.stringify({
+				category: signalCategory?.value || 'Public feedback',
+				severity: Number.parseInt(signalSeverity?.value || '1', 10),
+				context,
+				relatedProfileId: Number.parseInt(profilePanel?.dataset.userId || '0', 10) || null,
+				relatedEntity: profileName?.textContent || null,
+				submitterType: 'Public'
+			})
+		});
+		const result = await response.json();
+		updateSignalStatus(result.message || 'Signal submitted to moderation.', response.ok ? 'success' : 'warning');
+	} catch (error) {
+		updateSignalStatus('Feedback API is unavailable. Save the details and retry when VerifyDriverAPI is running.', 'warning');
+		console.warn(error);
+	}
+}
+
+async function submitVerificationCase(profileId, selectedEvidenceCount, checkedCount) {
+	const verificationUrl = verificationForm?.dataset.verificationUrl;
+
+	if (!verificationUrl || !verificationStatus) {
+		return;
+	}
+
+	verificationStatus.textContent = 'Submitting verification case to VerifyDriverAPI...';
+
+	try {
+		const response = await fetch(verificationUrl, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+			body: JSON.stringify({
+				caseType: caseType?.value || 'Relationship verification',
+				relationshipContext: verifyContext?.value || 'Relationship verification',
+				primaryProfileId: profileId,
+				counterparty: verifyCounterparty?.value || null,
+				evidence: Array.from(evidenceInputs).flatMap((input) => Array.from(input.files || []).map((file) => ({
+					documentType: input.closest('.evidence-card')?.querySelector('span')?.textContent || 'Evidence',
+					fileName: file.name,
+					contentType: file.type || null,
+					sizeBytes: file.size
+				}))),
+				confirmations: Array.from(verificationChecks).map((item) => ({
+					counterparty: verifyCounterparty?.value || 'Counterparty',
+					claim: item.parentElement?.textContent?.trim() || 'Relationship confirmation',
+					state: item.checked ? 'Confirmed' : 'Requested'
+				}))
+			})
+		});
+		const result = await response.json();
+		verificationStatus.textContent = result.message || (response.ok
+			? `Verification case created with ${selectedEvidenceCount} document${selectedEvidenceCount === 1 ? '' : 's'} and ${checkedCount} confirmation check${checkedCount === 1 ? '' : 's'}.`
+			: 'Verification case could not be created.');
+	} catch (error) {
+		verificationStatus.textContent = 'Verification case API is unavailable. Keep the evidence packet and retry when VerifyDriverAPI is running.';
+		console.warn(error);
+	}
+}
+
 setTheme(storedTheme || (prefersDark ? 'dark' : 'light'));
 configureRelationshipOptions();
 hydrateVerificationContext();
+configureVerificationProfileType();
 
 themeToggle?.addEventListener('click', () => {
 	const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
@@ -62,8 +145,8 @@ searchForm?.addEventListener('submit', (event) => {
     const searchMode = searchForm.dataset.searchMode || 'verification';
 
 	if (!query) {
-		searchStatus.textContent = searchMode === 'profiles'
-			? 'Enter a person, driver, owner, vehicle, fleet, or platform to search profiles.'
+		searchStatus.textContent = searchMode === 'profile'
+			? 'Enter a person, driver, owner, vehicle, fleet, or platform to search relationships.'
 			: searchMode === 'opportunity'
 				? 'Enter a vehicle, platform, fleet, licence type, location, or role to search opportunities.'
 			: 'Enter a driver name, registration, platform, or city to start verification.';
@@ -76,7 +159,7 @@ searchForm?.addEventListener('submit', (event) => {
 	}
 
 	searchStatus.textContent = searchMode === 'profile'
-		? `Searching known profiles for "${query}"...`
+		? `Searching known relationship records for "${query}"...`
 		: searchMode === 'opportunity'
 			? `Searching opportunities for "${query}"...`
 		: `Checking trust signals for "${query}"...`;
@@ -99,7 +182,7 @@ searchModeTabs.forEach((tab) => {
 		}
 
 		if (profileSearchLabel) {
-			profileSearchLabel.textContent = mode === 'opportunity' ? 'Find an employment or partnership opportunity' : 'Find a specific profile';
+			profileSearchLabel.textContent = mode === 'opportunity' ? 'Find an employment or partnership opportunity' : 'Find a specific person or relationship record';
 		}
 
 		if (searchInput) {
@@ -112,17 +195,19 @@ searchModeTabs.forEach((tab) => {
 		if (searchStatus) {
 			searchStatus.textContent = mode === 'opportunity'
 				? 'Choose your intent, then search for vehicles, owners, platforms, fleets, licences, or driver roles.'
-				: 'Search for a known person/profile by name or vehicle registration.';
+				: 'Search for a known person or relationship by name or vehicle registration.';
 		}
 	});
 });
 
 intentSelect?.addEventListener('change', configureRelationshipOptions);
+profileType?.addEventListener('change', configureVerificationProfileType);
 
 filterChips.forEach((chip) => {
 	chip.addEventListener('click', () => {
 		filterChips.forEach((item) => item.classList.remove('is-active'));
 		chip.classList.add('is-active');
+		loadAdminDashboard(chip.dataset.marketFilter || chip.textContent?.trim() || 'All drivers');
 	});
 });
 
@@ -135,7 +220,7 @@ async function loadVerification(verifyUrl, query) {
 		}
 
 		if (intentSelect && !opportunityControls?.classList.contains('is-hidden')) {
-			params.set('intent', intentSelect.selectedOptions[0]?.textContent?.trim() || intentSelect.value);
+			params.set('intent', intentSelect.value);
 		}
 
 		if (relationshipSelect && !opportunityControls?.classList.contains('is-hidden')) {
@@ -186,6 +271,7 @@ function renderProfile(driver, apiConnected) {
 	}
 
 	profilePanel.classList.remove('is-empty');
+	profilePanel.dataset.userId = driver.userId || '';
 	profileStatus.textContent = apiConnected ? 'Live API profile' : 'Preview profile';
 	profileName.textContent = driver.name;
 	profileMeta.textContent = `${driver.category} · ${driver.region} · ${driver.partnerName}`;
@@ -255,10 +341,12 @@ function profileMatchCard(driver) {
 	action.className = 'profile-match-card__action';
 	action.textContent = 'Start relationship';
     action.dataset.profileName = driver.name;
-	action.dataset.trustScore = driver.trustScore;
+    action.dataset.userId = driver.userId || '';
+    action.dataset.trustScore = driver.trustScore;
 	action.dataset.riskLevel = driver.riskLevel;
 	action.dataset.vehicle = `${driver.vehicleRegistration} · ${driver.vehicleDescription}`;
 	action.dataset.partner = driver.partnerName;
+	action.dataset.userType = driver.userType || '';
     action.dataset.relationshipContext = searchForm?.dataset.searchMode === 'opportunity' && relationshipSelect
         ? relationshipSelect.value
         : 'Relationship verification';
@@ -286,6 +374,8 @@ document.addEventListener('click', (event) => {
 
 	const params = new URLSearchParams({
 		profile: action.dataset.profileName || '',
+		profileId: action.dataset.userId || '',
+		userType: action.dataset.userType || '',
 		context: action.dataset.relationshipContext || 'Relationship verification',
 		trust: action.dataset.trustScore || '',
 		risk: action.dataset.riskLevel || '',
@@ -305,14 +395,58 @@ verificationForm?.addEventListener('submit', (event) => {
 
 	const selectedEvidenceCount = selectedEvidenceFiles().length;
 	const checkedCount = Array.from(verificationChecks).filter((item) => item.checked).length;
+	const profileId = Number.parseInt(verifyProfile?.dataset.profileId || '0', 10);
 
 	if (selectedEvidenceCount === 0) {
 		verificationStatus.textContent = 'Attach at least one supporting document before submitting verification.';
 		return;
 	}
 
-	verificationStatus.textContent = `Verification packet ready: ${selectedEvidenceCount} document${selectedEvidenceCount === 1 ? '' : 's'} attached and ${checkedCount} confirmation check${checkedCount === 1 ? '' : 's'} marked. API submission comes next.`;
+	if (!profileId) {
+		verificationStatus.textContent = 'Start from a Relationships result before API submission so the case has a linked profile id.';
+		return;
+	}
+
+	submitVerificationCase(profileId, selectedEvidenceCount, checkedCount);
 });
+
+signalDraft?.addEventListener('click', () => {
+	const context = signalContext?.value.trim() || '';
+	updateSignalStatus(
+		context
+			? 'Draft signal saved locally for review. Backend moderation submission is pending.'
+			: 'Add context before saving a useful moderation draft.',
+		context ? 'success' : 'warning'
+	);
+});
+
+signalForm?.addEventListener('submit', (event) => {
+	event.preventDefault();
+
+	const context = signalContext?.value.trim() || '';
+
+	if (context.length < 20) {
+		updateSignalStatus('Add at least 20 characters of context so moderators can review the signal fairly.', 'warning');
+		signalContext?.focus();
+		return;
+	}
+
+	updateSignalStatus(
+		'Submitting signal to moderation...',
+		'neutral'
+	);
+	submitFeedbackSignal(context);
+});
+
+function updateSignalStatus(message, tone) {
+	if (!signalStatus) {
+		return;
+	}
+
+	signalStatus.textContent = message;
+	signalStatus.classList.toggle('is-success', tone === 'success');
+	signalStatus.classList.toggle('is-warning', tone === 'warning');
+}
 
 function hydrateVerificationContext() {
 	if (!verificationForm) {
@@ -323,13 +457,133 @@ function hydrateVerificationContext() {
 
 	if (verifyProfile && params.has('profile')) {
 		verifyProfile.value = params.get('profile') || '';
+		verifyProfile.dataset.profileId = params.get('profileId') || '';
 	}
 
 	if (verifyContext && params.has('context')) {
 		verifyContext.value = params.get('context') || '';
 	}
 
+	if (profileType && params.has('userType')) {
+		const profileRole = normaliseProfileType(params.get('userType') || '');
+		const matchingOption = Array.from(profileType.options).find((option) => option.value === profileRole);
+		if (matchingOption) {
+			profileType.value = profileRole;
+		}
+	}
+
 	hydrateTrustCue(params);
+	configureVerificationProfileType();
+}
+
+async function configureVerificationProfileType() {
+	if (!profileType || !caseType || !caseGuidance) {
+		return;
+	}
+
+	const selectedType = profileType.value || 'Driver';
+	const rules = await loadVerificationRules(selectedType);
+
+	caseType.replaceChildren(...rules.allowedCaseTypes.map((label) => {
+		const option = document.createElement('option');
+		option.textContent = label;
+		return option;
+	}));
+	caseGuidance.textContent = rules.guidance;
+
+	evidenceCards.forEach((card) => {
+		const appliesTo = card.dataset.evidenceApplies || '';
+		const isVisible = appliesTo.includes(selectedType);
+		card.classList.toggle('is-hidden', !isVisible);
+		if (!isVisible) {
+			const input = card.querySelector('input');
+			if (input) {
+				input.value = '';
+			}
+		}
+	});
+
+	updateEvidenceStatus();
+}
+
+async function loadVerificationRules(selectedType) {
+	const fallback = {
+		allowedCaseTypes: ['Driver identity', 'Driver to owner relationship'],
+		requiredEvidenceTypes: ['Driver licence'],
+		guidance: 'Driver profiles should verify identity and licence evidence before relationship approval.'
+	};
+	const rulesUrl = verificationForm?.dataset.verificationRulesUrl;
+	if (!rulesUrl) {
+		return fallback;
+	}
+
+	try {
+		const response = await fetch(`${rulesUrl}?profileType=${encodeURIComponent(selectedType)}`, {
+			headers: { Accept: 'application/json' }
+		});
+		if (!response.ok) {
+			throw new Error(`Verification rules returned ${response.status}`);
+		}
+
+		return await response.json();
+	} catch (error) {
+		console.warn(error);
+		return fallback;
+	}
+}
+
+async function loadAdminDashboard(market) {
+	if (!adminDashboard) {
+		return;
+	}
+
+	try {
+		const response = await fetch(`${adminDashboard.dataset.adminDashboardUrl}?market=${encodeURIComponent(market)}`, {
+			headers: { Accept: 'application/json' }
+		});
+		if (!response.ok) {
+			throw new Error(`Admin dashboard returned ${response.status}`);
+		}
+
+		const dashboard = await response.json();
+		setText('[data-admin-profiles]', dashboard.adminTrustSignals?.profilesMonitored);
+		setText('[data-admin-review-risk]', dashboard.adminTrustSignals?.reviewRisk);
+		setText('[data-admin-high-risk]', dashboard.adminTrustSignals?.highRisk);
+		setText('[data-admin-average-trust]', dashboard.adminTrustSignals?.averageTrustScore);
+		setText('[data-admin-feedback]', dashboard.moderationQueue?.pendingFeedback);
+		setText('[data-admin-cases]', dashboard.moderationQueue?.verificationCases);
+		setText('[data-admin-total-relationships]', dashboard.adminSeedCoverage?.totalRelationships);
+		setText('[data-admin-available-relationships]', dashboard.adminSeedCoverage?.availableRelationships);
+		setText('[data-admin-verified-relationships]', dashboard.adminSeedCoverage?.verifiedRelationships);
+		const types = dashboard.adminSeedCoverage?.relationshipTypes || [];
+		setText('[data-admin-relationship-type-count]', types.length);
+		setText('[data-admin-relationship-types]', types.length === 0 ? 'No relationship types loaded' : types.join(', '));
+	} catch (error) {
+		console.warn(error);
+	}
+}
+
+function setText(selector, value) {
+	const element = document.querySelector(selector);
+	if (element && value !== undefined && value !== null) {
+		element.textContent = value;
+	}
+}
+
+function normaliseProfileType(userType) {
+	if (/owner/i.test(userType)) {
+		return 'Owner';
+	}
+
+	if (/fleet/i.test(userType)) {
+		return 'Fleet';
+	}
+
+	if (/platform/i.test(userType)) {
+		return 'Platform';
+	}
+
+	return 'Driver';
 }
 
 function hydrateTrustCue(params) {
