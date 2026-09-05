@@ -15,6 +15,8 @@ const evidenceInputs = document.querySelectorAll('[data-evidence-input]');
 const verificationChecks = document.querySelectorAll('[data-verify-check]');
 const verifyProfile = document.querySelector('[data-verify-profile]');
 const verifyContext = document.querySelector('[data-verify-context]');
+const verifyCounterparty = document.querySelector('[data-verify-counterparty]');
+const caseType = document.querySelector('[data-case-type]');
 const trustCueScore = document.querySelector('[data-trust-cue-score]');
 const trustCueName = document.querySelector('[data-trust-cue-name]');
 const trustCueSummary = document.querySelector('[data-trust-cue-summary]');
@@ -48,6 +50,76 @@ function setTheme(theme) {
 
 	if (themeLabel) {
 		themeLabel.textContent = theme === 'dark' ? 'Light' : 'Dark';
+	}
+
+	async function submitFeedbackSignal(context) {
+		const feedbackUrl = signalForm?.dataset.feedbackUrl;
+
+		if (!feedbackUrl) {
+			updateSignalStatus('Feedback submission is not configured yet.', 'warning');
+			return;
+		}
+
+		try {
+			const response = await fetch(feedbackUrl, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+				body: JSON.stringify({
+					category: signalCategory?.value || 'Public feedback',
+					severity: Number.parseInt(signalSeverity?.value || '1', 10),
+					context,
+					relatedProfileId: Number.parseInt(profilePanel?.dataset.userId || '0', 10) || null,
+					relatedEntity: profileName?.textContent || null,
+					submitterType: 'Public'
+				})
+			});
+			const result = await response.json();
+			updateSignalStatus(result.message || 'Signal submitted to moderation.', response.ok ? 'success' : 'warning');
+		} catch (error) {
+			updateSignalStatus('Feedback API is unavailable. Save the details and retry when VerifyDriverAPI is running.', 'warning');
+			console.warn(error);
+		}
+	}
+
+	async function submitVerificationCase(profileId, selectedEvidenceCount, checkedCount) {
+		const verificationUrl = verificationForm?.dataset.verificationUrl;
+
+		if (!verificationUrl || !verificationStatus) {
+			return;
+		}
+
+		verificationStatus.textContent = 'Submitting verification case to VerifyDriverAPI...';
+
+		try {
+			const response = await fetch(verificationUrl, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+				body: JSON.stringify({
+					caseType: caseType?.value || 'Relationship verification',
+					relationshipContext: verifyContext?.value || 'Relationship verification',
+					primaryProfileId: profileId,
+					counterparty: verifyCounterparty?.value || null,
+					evidence: Array.from(evidenceInputs).flatMap((input) => Array.from(input.files || []).map((file) => ({
+						documentType: input.closest('.evidence-card')?.querySelector('span')?.textContent || 'Evidence',
+						fileName: file.name,
+						contentType: file.type || null,
+						sizeBytes: file.size
+					}))),
+					confirmations: Array.from(verificationChecks).map((item) => ({
+						counterparty: verifyCounterparty?.value || 'Counterparty',
+						claim: item.parentElement?.textContent?.trim() || 'Relationship confirmation',
+						state: item.checked ? 'Confirmed' : 'Requested'
+					}))
+				})
+			});
+			const result = await response.json();
+			verificationStatus.textContent = result.message || (response.ok
+				? `Verification case created with ${selectedEvidenceCount} document${selectedEvidenceCount === 1 ? '' : 's'} and ${checkedCount} confirmation check${checkedCount === 1 ? '' : 's'}.`
+				: 'Verification case could not be created.');
+		} catch (error) {
+			verificationStatus.textContent = 'Verification case API is unavailable. Keep the evidence packet and retry when VerifyDriverAPI is running.';
+			console.warn(error);
+		}
 	}
 }
 
@@ -192,6 +264,7 @@ function renderProfile(driver, apiConnected) {
 	}
 
 	profilePanel.classList.remove('is-empty');
+	profilePanel.dataset.userId = driver.userId || '';
 	profileStatus.textContent = apiConnected ? 'Live API profile' : 'Preview profile';
 	profileName.textContent = driver.name;
 	profileMeta.textContent = `${driver.category} · ${driver.region} · ${driver.partnerName}`;
@@ -261,7 +334,8 @@ function profileMatchCard(driver) {
 	action.className = 'profile-match-card__action';
 	action.textContent = 'Start relationship';
     action.dataset.profileName = driver.name;
-	action.dataset.trustScore = driver.trustScore;
+    action.dataset.userId = driver.userId || '';
+    action.dataset.trustScore = driver.trustScore;
 	action.dataset.riskLevel = driver.riskLevel;
 	action.dataset.vehicle = `${driver.vehicleRegistration} · ${driver.vehicleDescription}`;
 	action.dataset.partner = driver.partnerName;
@@ -292,6 +366,7 @@ document.addEventListener('click', (event) => {
 
 	const params = new URLSearchParams({
 		profile: action.dataset.profileName || '',
+		profileId: action.dataset.userId || '',
 		context: action.dataset.relationshipContext || 'Relationship verification',
 		trust: action.dataset.trustScore || '',
 		risk: action.dataset.riskLevel || '',
@@ -311,13 +386,19 @@ verificationForm?.addEventListener('submit', (event) => {
 
 	const selectedEvidenceCount = selectedEvidenceFiles().length;
 	const checkedCount = Array.from(verificationChecks).filter((item) => item.checked).length;
+	const profileId = Number.parseInt(verifyProfile?.dataset.profileId || '0', 10);
 
 	if (selectedEvidenceCount === 0) {
 		verificationStatus.textContent = 'Attach at least one supporting document before submitting verification.';
 		return;
 	}
 
-	verificationStatus.textContent = `Verification packet ready: ${selectedEvidenceCount} document${selectedEvidenceCount === 1 ? '' : 's'} attached and ${checkedCount} confirmation check${checkedCount === 1 ? '' : 's'} marked. API submission comes next.`;
+	if (!profileId) {
+		verificationStatus.textContent = 'Start from a Profiles result before API submission so the case has a linked profile id.';
+		return;
+	}
+
+	submitVerificationCase(profileId, selectedEvidenceCount, checkedCount);
 });
 
 signalDraft?.addEventListener('click', () => {
@@ -342,9 +423,10 @@ signalForm?.addEventListener('submit', (event) => {
 	}
 
 	updateSignalStatus(
-		`${signalCategory?.value || 'Driver'} signal queued for moderation at severity ${signalSeverity?.value || '1'}. API submission is pending future backend implementation.`,
-		'success'
+		'Submitting signal to moderation...',
+		'neutral'
 	);
+	submitFeedbackSignal(context);
 });
 
 function updateSignalStatus(message, tone) {
@@ -366,6 +448,7 @@ function hydrateVerificationContext() {
 
 	if (verifyProfile && params.has('profile')) {
 		verifyProfile.value = params.get('profile') || '';
+		verifyProfile.dataset.profileId = params.get('profileId') || '';
 	}
 
 	if (verifyContext && params.has('context')) {

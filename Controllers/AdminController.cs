@@ -15,7 +15,14 @@ public sealed class AdminController : Controller
     public async Task<IActionResult> Index(CancellationToken cancellationToken)
     {
         var dashboard = await _driverMarketplaceService.GetDashboardAsync(cancellationToken);
+        var moderationQueue = await _driverMarketplaceService.GetModerationQueueAsync(cancellationToken);
 
-        return View(dashboard);
+        return View(new Models.DriverTrustDashboardViewModel
+        {
+            ApiConnected = dashboard.ApiConnected,
+            ApiStatus = dashboard.ApiStatus,
+            Drivers = dashboard.Drivers,
+            ModerationQueue = moderationQueue
+        });
     }
 }

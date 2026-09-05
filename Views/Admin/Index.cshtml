@@ -25,6 +25,11 @@
             <strong>@(Model.ApiConnected ? "On" : Model.ApiStatus.StartsWith("API reachable") ? "Degraded" : "Off")</strong>
             <p>@Model.ApiStatus</p>
         </div>
+        <div class="panel-breakout">
+            <span>Moderation API</span>
+            <strong>@(Model.ModerationQueue.PendingFeedback + Model.ModerationQueue.VerificationCases)</strong>
+            <p>@Model.ModerationQueue.Status</p>
+        </div>
     </aside>
 
     <section class="feed" aria-label="Driver trust activity feed">
@@ -65,13 +70,23 @@
         <div class="candidate-list">
             <div class="candidate-row">
                 <span>Pending public reports</span>
-                <strong>14</strong>
-                <small>Awaiting owner review</small>
+                <strong>@Model.ModerationQueue.PendingFeedback</strong>
+                <small>Loaded from VerifyDriverAPI moderation queue</small>
+            </div>
+            <div class="candidate-row">
+                <span>Verification cases</span>
+                <strong>@Model.ModerationQueue.VerificationCases</strong>
+                <small>Draft, submitted, counterparty review, disputed, or rejected cases</small>
             </div>
             <div class="candidate-row">
                 <span>Profiles needing merge</span>
-                <strong>2</strong>
+                <strong>@Model.ModerationQueue.DuplicateProfiles</strong>
                 <small>Possible duplicate entities</small>
+            </div>
+            <div class="candidate-row">
+                <span>Suspicious activity</span>
+                <strong>@Model.ModerationQueue.SuspiciousActivity</strong>
+                <small>Signals requiring moderator review</small>
             </div>
         </div>
     </article>

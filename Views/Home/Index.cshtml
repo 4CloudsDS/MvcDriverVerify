@@ -65,7 +65,7 @@
             <span class="eyebrow">Structured contribution</span>
             <h2>Submit a driver signal</h2>
         </div>
-        <form class="signal-form" data-signal-form>
+        <form class="signal-form" data-signal-form data-feedback-url="@Url.Action("SubmitFeedback", "Home")">
             <label>
                 Category
                 <select data-signal-category>
@@ -83,7 +83,7 @@
                 Context
                 <textarea rows="4" placeholder="Summarize what happened, where it happened, and what should be reviewed." data-signal-context></textarea>
             </label>
-            <p class="form-status" data-signal-status aria-live="polite">Structured signals are saved for moderation before they affect trust.</p>
+            <p class="form-status" data-signal-status aria-live="polite">Structured signals are submitted to moderation before they affect trust.</p>
             <div class="form-actions">
                 <button type="button" data-signal-draft>Save draft</button>
                 <button type="submit" class="button-strong">Submit for review</button>

@@ -11,7 +11,7 @@
 </section>
 
 <section class="verify-workspace" aria-label="Verification case workspace">
-    <form class="verification-case" data-verification-form>
+    <form class="verification-case" data-verification-form data-verification-url="@Url.Action("Create", "Verify")">
         <article class="verify-card verify-card--primary">
             <div class="section-heading">
                 <span class="eyebrow">Case setup</span>
@@ -35,11 +35,11 @@
                 </label>
                 <label>
                     Primary profile
-                    <input type="text" data-verify-profile placeholder="Driver, owner, fleet, or platform name" />
+                    <input type="text" data-verify-profile data-profile-id="" placeholder="Driver, owner, fleet, or platform name" />
                 </label>
                 <label>
                     Counterparty
-                    <input type="text" placeholder="Owner, driver, vehicle, employer, or platform" />
+                    <input type="text" data-verify-counterparty placeholder="Owner, driver, vehicle, employer, or platform" />
                 </label>
             </div>
         </article>
@@ -91,7 +91,7 @@
         </article>
 
         <div class="verification-actions">
-            <p class="verification-status" data-verification-status>Complete the case details, attach evidence, then submit verification.</p>
+            <p class="verification-status" data-verification-status>Complete the case details, attach evidence, then submit a verification case.</p>
             <button type="submit" class="button-strong verify-submit">Verify</button>
         </div>
     </form>
